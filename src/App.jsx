@@ -1,6 +1,7 @@
 import { io } from "socket.io-client";
 import { useEffect } from "react";
 import Login from "./components/Login";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function App() {
   // useEffect creates connection on mount
@@ -22,5 +23,11 @@ export default function App() {
     };
   }, []);
 
-  return <Login />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
