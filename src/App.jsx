@@ -2,6 +2,7 @@ import { io } from "socket.io-client";
 import { useEffect } from "react";
 import Login from "./components/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ChatPage from "./components/ChatPage";
 
 export default function App() {
   // useEffect creates connection on mount
@@ -27,6 +28,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />}></Route>
+        <Route path="/chat" element={<ChatPage />}></Route>
       </Routes>
     </BrowserRouter>
   );
