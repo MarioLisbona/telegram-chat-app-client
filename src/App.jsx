@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
 import { useEffect } from "react";
+import Login from "./components/Login";
 
 export default function App() {
   // useEffect creates connection on mount
@@ -21,7 +22,5 @@ export default function App() {
     };
   }, []);
 
-  return (
-    <h1 className="text-5xl text-blue-500 font-bold underline">Hello world!</h1>
-  );
+  return <Login />;
 }
