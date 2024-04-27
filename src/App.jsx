@@ -1,5 +1,8 @@
 import { io } from "socket.io-client";
 import { useEffect } from "react";
+import Login from "./components/Login";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ChatPage from "./components/ChatPage";
 
 export default function App() {
   // useEffect creates connection on mount
@@ -22,6 +25,11 @@ export default function App() {
   }, []);
 
   return (
-    <h1 className="text-5xl text-blue-500 font-bold underline">Hello world!</h1>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />}></Route>
+        <Route path="/chat" element={<ChatPage />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
