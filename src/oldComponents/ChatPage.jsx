@@ -11,12 +11,22 @@ const ChatPage = ({ socket }) => {
   useEffect(() => {
     // Function to handle incoming messages
     const handleMessageResponse = (data) => {
+      console.log("Logging chat client msg data", data);
       setMessages([...messages, data]);
     };
 
     // Function to handle incoming Telegram messages
     const handleTelegramMessage = (data) => {
+      const telegramMessage = {
+        text: data.text,
+        name: `(telegram) ${data.from.first_name} ${data.from.last_name}`,
+        id: `${data.chat.id}-${data.chat.date}-${data.message_id}`,
+        socketID: "unknown",
+      };
+
       console.log("Logging telegram msg data", data);
+
+      setMessages([...messages, telegramMessage]);
     };
 
     socket.on("messageResponse", handleMessageResponse);
