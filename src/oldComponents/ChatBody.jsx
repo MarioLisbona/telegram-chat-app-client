@@ -9,13 +9,18 @@ const ChatBody = ({ messages, typingStatus, lastMessageRef }) => {
     window.location.reload();
   };
 
+  const chatUser = localStorage.getItem("userName");
+
   return (
     <>
       <header className="chat__mainHeader">
         <p>Hangout with Colleagues</p>
-        <button className="leaveChat__btn" onClick={handleLeaveChat}>
-          LEAVE CHAT
-        </button>
+        <div>
+          <p>{chatUser}</p>
+          <button className="leaveChat__btn" onClick={handleLeaveChat}>
+            LEAVE CHAT
+          </button>
+        </div>
       </header>
 
       <div className="message__container">
