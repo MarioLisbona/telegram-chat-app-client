@@ -3,9 +3,11 @@ import { useState } from "react";
 const ChatFooter = ({ socket }) => {
   const [message, setMessage] = useState("");
 
+  // emit message when users is typing - used with onKeyDown in component
   const handleTyping = () =>
     socket.emit("typing", `${localStorage.getItem("userName")} is typing`);
 
+  // send message to server on click event send button
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (message.trim() && localStorage.getItem("userName")) {
@@ -16,6 +18,7 @@ const ChatFooter = ({ socket }) => {
         socketID: socket.id,
       });
     }
+    // clear chat text box
     setMessage("");
   };
   return (
