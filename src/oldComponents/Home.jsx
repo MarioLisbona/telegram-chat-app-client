@@ -5,8 +5,11 @@ const Home = ({ socket }) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
 
+  // handling user login
   const handleSubmit = (e) => {
     e.preventDefault();
+    // set localstorage to username amd emit newUser object to server
+    // redirect to chat window
     localStorage.setItem("userName", userName);
     socket.emit("newUser", { userName, socketID: socket.id });
     navigate("/chat");
