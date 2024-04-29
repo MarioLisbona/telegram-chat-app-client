@@ -11,12 +11,13 @@ const ChatPage = ({ socket }) => {
   useEffect(() => {
     // Function to handle incoming messages
     const handleMessageResponse = (data) => {
-      console.log("Logging chat client msg data", data);
+      // spread new message object into messages array
       setMessages([...messages, data]);
     };
 
     // Function to handle incoming Telegram messages
     const handleTelegramMessage = (data) => {
+      // create new message object with telegram message data
       const telegramMessage = {
         text: data.text,
         name: `(telegram) ${data.from.first_name} ${data.from.last_name}`,
@@ -24,11 +25,11 @@ const ChatPage = ({ socket }) => {
         socketID: "unknown",
       };
 
-      console.log("Logging telegram msg data", data);
-
+      // spread new telegram message object into messages array
       setMessages([...messages, telegramMessage]);
     };
 
+    // callbacks for different responses received on socket
     socket.on("messageResponse", handleMessageResponse);
     socket.on("telegramMessage", handleTelegramMessage);
 
@@ -44,6 +45,7 @@ const ChatPage = ({ socket }) => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // receiving the typing status from the server
   useEffect(() => {
     socket.on("typingResponse", (data) => setTypingStatus(data));
   }, [socket]);
