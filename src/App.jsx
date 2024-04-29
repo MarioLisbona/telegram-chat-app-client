@@ -14,6 +14,8 @@ const protocol =
 let serverHost = import.meta.env.VITE_SERVER_HOST || "localhost";
 let serverPort = import.meta.env.VITE_SERVER_PORT || 4000;
 
+console.log(`${protocol}${serverHost}:${serverPort}`);
+
 // socket connetion string
 const socket = io(`${protocol}${serverHost}:${serverPort}`, {
   transports: ["websocket"],
