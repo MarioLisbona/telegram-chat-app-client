@@ -1,4 +1,4 @@
-export default function ChatMessageReceived() {
+export default function ChatMessageReceived({ message }) {
   return (
     <div className="col-start-1 col-end-8 p-3 rounded-lg">
       <div className="flex flex-row items-center">
@@ -6,7 +6,7 @@ export default function ChatMessageReceived() {
           A
         </div>
         <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
-          <div>Hey How are you today?</div>
+          <div>{message.text}</div>
         </div>
       </div>
     </div>
