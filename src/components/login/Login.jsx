@@ -1,18 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { handleSubmit } from "../../lib/formUtils";
 export default function Login({ socket }) {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
 
   // handling user login
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // set localstorage to username amd emit newUser object to server
-    // redirect to chat window
-    localStorage.setItem("userName", userName);
-    socket.emit("newUser", { userName, socketID: socket.id });
-    navigate("/chat");
-  };
+  const loginUser = handleSubmit(socket, userName, navigate);
 
   return (
     <>
@@ -30,7 +24,7 @@ export default function Login({ socket }) {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={loginUser}>
               <div>
                 <label
                   htmlFor="email"
