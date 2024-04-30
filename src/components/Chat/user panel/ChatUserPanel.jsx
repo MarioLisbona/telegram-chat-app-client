@@ -1,5 +1,5 @@
 import ChatName from "./components/ChatName";
-import UserProfile from "./components/UserProfile";
+// import UserProfile from "./components/UserProfile";
 import ActiveUsers from "./components/ActiveUsers";
 import { useState, useEffect } from "react";
 
