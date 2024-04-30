@@ -1,7 +1,7 @@
 import ChatFooter from "../footer/ChatFooter";
 import ChatMessageReceived from "./components/ChatMessageReceived";
 import ChatMessageSent from "./components/ChatMessageSent";
-export default function ChatBody({ messages, socket }) {
+export default function ChatBody({ messages, socket, lastMessageRef }) {
   return (
     <div className="flex flex-col flex-auto h-full p-6">
       <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
@@ -17,6 +17,8 @@ export default function ChatBody({ messages, socket }) {
               )}
             </div>
           </div>
+          {/* used to scroll to bottom of element on new message received */}
+          <div ref={lastMessageRef} />
         </div>
         <ChatFooter socket={socket} />
       </div>

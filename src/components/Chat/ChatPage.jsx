@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ChatBody from "./body/ChatBody";
 import ChatUserPanel from "./user panel/ChatUserPanel";
 
 export default function ChatPage({ socket }) {
   const [messages, setMessages] = useState([]);
+  const lastMessageRef = useRef(null);
 
   useEffect(() => {
     // Function to handle incoming messages
@@ -37,11 +38,20 @@ export default function ChatPage({ socket }) {
     };
   }, [socket, messages]);
 
+  // 👇️ scroll to bottom every time messages change
+  useEffect(() => {
+    lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
         <ChatUserPanel />
-        <ChatBody messages={messages} socket={socket} />
+        <ChatBody
+          messages={messages}
+          socket={socket}
+          lastMessageRef={lastMessageRef}
+        />
       </div>
     </div>
   );
