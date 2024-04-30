@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function UserButton({ user }) {
   const activeUser = user.userName;
   const userInitial = user.userName.charAt(0).toUpperCase();
