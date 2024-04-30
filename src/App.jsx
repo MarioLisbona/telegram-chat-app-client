@@ -2,7 +2,7 @@
 // import ChatPage from "./oldComponents/ChatPage.jsx";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { initializeSocket } from "./socket.js";
+import { initializeSocket } from "./lib/socketUtils.js";
 import Login from "./components/login/Login.jsx";
 import ChatPage from "./components/Chat/ChatPage.jsx";
 
