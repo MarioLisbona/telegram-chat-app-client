@@ -3,6 +3,8 @@ import { useState } from "react";
 export default function ChatFooter({ socket, typingStatus }) {
   const [message, setMessage] = useState("");
 
+  console.log("typing status", typingStatus);
+
   // send message to server on click event send button
   const handleSendMessage = (e) => {
     e.preventDefault();
