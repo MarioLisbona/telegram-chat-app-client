@@ -1,7 +1,7 @@
 import ChatFooter from "../footer/ChatFooter";
 import ChatMessageReceived from "./components/ChatMessageReceived";
 import ChatMessageSent from "./components/ChatMessageSent";
-export default function ChatBody({ messages }) {
+export default function ChatBody({ messages, socket }) {
   return (
     <div className="flex flex-col flex-auto h-full p-6">
       <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
@@ -18,7 +18,7 @@ export default function ChatBody({ messages }) {
             </div>
           </div>
         </div>
-        <ChatFooter />
+        <ChatFooter socket={socket} />
       </div>
     </div>
   );
