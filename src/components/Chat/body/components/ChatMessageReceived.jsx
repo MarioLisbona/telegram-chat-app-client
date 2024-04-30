@@ -12,7 +12,7 @@ export default function ChatMessageReceived({ message }) {
           <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
             {userInitial}
           </div>
-          <div className="relative ml-3 text-sm font-medium bg-white py-2 px-4 shadow rounded-xl">
+          <div className="relative ml-3 text-sm font-medium bg-white py-2 px-4 shadow rounded-xl rounded-tl-none">
             <div>{text}</div>
           </div>
         </div>
