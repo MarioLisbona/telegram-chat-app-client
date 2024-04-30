@@ -1,6 +1,9 @@
 import UserButton from "./UserButton";
-
+import { sortArrayByUsername } from "../../../../lib/chatUitls";
 export default function ActiveUser({ users }) {
+  // assign current chat user and sort users array with current user at top
+  const chatUser = localStorage.getItem("userName");
+  const sortedUsers = sortArrayByUsername(users, chatUser);
   return (
     <div className="flex flex-col mt-8">
       <div className="flex flex-row items-center justify-between text-xs">
@@ -19,7 +22,7 @@ export default function ActiveUser({ users }) {
             2
           </div>
         </button> */}
-        {users.map((user, idx) => (
+        {sortedUsers.map((user, idx) => (
           <UserButton user={user} key={idx} />
         ))}
       </div>
