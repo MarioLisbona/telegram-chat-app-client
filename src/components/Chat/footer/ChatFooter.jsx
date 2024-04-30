@@ -51,7 +51,7 @@ export default function ChatFooter({ socket, typingStatus }) {
               type="text"
               className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
             />
-            <p>{typingStatus}</p>
+            {/* <p>{typingStatus}</p> */}
             {/* <button className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600">
               <svg
                 className="w-6 h-6"
