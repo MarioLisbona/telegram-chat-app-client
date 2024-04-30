@@ -52,7 +52,7 @@ export default function ChatPage({ socket }) {
   return (
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
-        <ChatUserPanel />
+        <ChatUserPanel socket={socket} />
         <ChatBody
           messages={messages}
           socket={socket}
