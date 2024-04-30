@@ -5,7 +5,6 @@ export default function ChatFooter({ socket }) {
 
   // send message to server on click event send button
   const handleSendMessage = (e) => {
-    console.log("message", message);
     e.preventDefault();
     if (message.trim() && localStorage.getItem("userName")) {
       socket.emit("message", {
