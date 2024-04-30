@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import ChatBody from "./body/ChatBody";
 import ChatUserPanel from "./user panel/ChatUserPanel";
 
@@ -41,7 +41,7 @@ export default function ChatPage({ socket }) {
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
         <ChatUserPanel />
-        <ChatBody messages={messages} />
+        <ChatBody messages={messages} socket={socket} />
       </div>
     </div>
   );
