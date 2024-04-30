@@ -1,16 +1,31 @@
-import { io } from "socket.io-client";
-
-// import Login from "./components/Login";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import ChatPage from "./components/ChatPage";
 import Home from "./oldComponents/Home";
 import ChatPage from "./oldComponents/ChatPage.jsx";
-
-const socket = io("http://localhost:4000", {
-  transports: ["websocket"],
-});
+import { initializeSocket } from "./socket.js";
 
 export default function App() {
+  const [socket, setSocket] = useState(null);
+
+  // useEffect to set socket state on initial component mount
+  useEffect(() => {
+    const initialize = async () => {
+      if (!socket) {
+        const newSocket = await initializeSocket();
+        setSocket(newSocket);
+      }
+    };
+
+    // run async fucntion to dynamicaly set socket connection
+    initialize();
+
+    // cleanup functions
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, [socket]); // Only run effect when 'socket' changes, ensuring it runs only once on mount
   return (
     <BrowserRouter>
       <Routes>
