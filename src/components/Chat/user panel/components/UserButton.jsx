@@ -28,11 +28,17 @@ export default function UserButton({ user, socket }) {
     <div className="flex flex-col items-start justify-center">
       <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
         <div
-          className={`flex items-center justify-center h-8 w-8 bg-orange-200 rounded-full ${
-            chatUser ? "border-2 border-indigo-500" : ""
-          }`}
+          className={
+            "flex items-center justify-center h-8 w-8 bg-orange-200 rounded-full"
+          }
         >
-          {userInitial}
+          {showTypingStatus ? (
+            <span className="relative flex h-6 w-6">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+            </span>
+          ) : (
+            userInitial
+          )}
         </div>
 
         <div
@@ -40,7 +46,7 @@ export default function UserButton({ user, socket }) {
             chatUser ? "text-indigo-500 font-bold" : "font-semibold"
           }`}
         >
-          {showTypingStatus ? <TypingStatus /> : user.userName}
+          {user.userName}
         </div>
       </button>
     </div>
