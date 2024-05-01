@@ -1,8 +1,10 @@
+// import Home from "./oldComponents/Home";
+// import ChatPage from "./oldComponents/ChatPage.jsx";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./oldComponents/Home";
-import ChatPage from "./oldComponents/ChatPage.jsx";
-import { initializeSocket } from "./socket.js";
+import { initializeSocket } from "./lib/socketUtils.js";
+import Login from "./components/login/Login.jsx";
+import ChatPage from "./components/Chat/ChatPage.jsx";
 
 export default function App() {
   const [socket, setSocket] = useState(null);
@@ -29,10 +31,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Login />}></Route>
-        <Route path="/chat" element={<ChatPage />}></Route> */}
-        <Route path="/" element={<Home socket={socket} />}></Route>
+        <Route path="/" element={<Login socket={socket} />}></Route>
         <Route path="/chat" element={<ChatPage socket={socket} />}></Route>
+        {/* <Route path="/" element={<Home socket={socket} />}></Route>
+        <Route path="/chat" element={<ChatPage socket={socket} />}></Route> */}
       </Routes>
     </BrowserRouter>
   );

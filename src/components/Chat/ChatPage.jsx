@@ -1,15 +1,14 @@
 import { useEffect, useState, useRef } from "react";
-import ChatBar from "./ChatBar";
-import ChatBody from "./ChatBody";
-import ChatFooter from "./ChatFooter";
+import ChatBody from "./body/ChatBody";
+import ChatUserPanel from "./user panel/ChatUserPanel";
 
-const ChatPage = ({ socket }) => {
+export default function ChatPage({ socket }) {
   const [messages, setMessages] = useState([]);
-  const [typingStatus, setTypingStatus] = useState("");
+  const [chatTitle, setChatTitle] = useState("");
   const lastMessageRef = useRef(null);
 
   useEffect(() => {
-    // Function to handle incoming messages
+    // Function to handle incoming messagesResponse from server
     const handleMessageResponse = (data) => {
       // spread new message object into messages array
       setMessages([...messages, data]);
@@ -19,6 +18,7 @@ const ChatPage = ({ socket }) => {
     const handleTelegramMessage = (data) => {
       // create new message object with telegram message data
       const telegramMessage = {
+        chat: data.chat.title,
         text: data.text,
         name: `(telegram) ${data.from.first_name} ${data.from.last_name}`,
         id: `${data.chat.id}-${data.chat.date}-${data.message_id}`,
@@ -27,6 +27,7 @@ const ChatPage = ({ socket }) => {
 
       // spread new telegram message object into messages array
       setMessages([...messages, telegramMessage]);
+      setChatTitle(data.chat.title);
     };
 
     // callbacks for different responses received on socket
@@ -45,24 +46,16 @@ const ChatPage = ({ socket }) => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // receiving the typing status from the server
-  useEffect(() => {
-    socket.on("typingResponse", (data) => setTypingStatus(data));
-  }, [socket]);
-
   return (
-    <div className="chat">
-      <ChatBar socket={socket} />
-      <div className="chat__main">
+    <div className="flex h-screen antialiased text-gray-800">
+      <div className="flex flex-row h-full w-full overflow-x-hidden">
+        <ChatUserPanel socket={socket} chatTitle={chatTitle} />
         <ChatBody
           messages={messages}
-          typingStatus={typingStatus}
+          socket={socket}
           lastMessageRef={lastMessageRef}
         />
-        <ChatFooter socket={socket} />
       </div>
     </div>
   );
-};
-
-export default ChatPage;
+}

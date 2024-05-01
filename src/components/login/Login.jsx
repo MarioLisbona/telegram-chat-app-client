@@ -1,6 +1,13 @@
 import { useNavigate } from "react-router-dom";
-export default function Login() {
+import { useState } from "react";
+import { handleSubmit } from "../../lib/formUtils";
+export default function Login({ socket }) {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+
+  // handling user login
+  const loginUser = handleSubmit(socket, userName, navigate);
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -17,7 +24,7 @@ export default function Login() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={loginUser}>
               <div>
                 <label
                   htmlFor="email"
@@ -27,9 +34,10 @@ export default function Login() {
                 </label>
                 <div className="mt-2">
                   <input
+                    onChange={(e) => setUserName(e.target.value)}
                     id="email"
                     name="email"
-                    type="email"
+                    // type="email"
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -37,7 +45,7 @@ export default function Login() {
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -54,9 +62,9 @@ export default function Login() {
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-              </div>
+              </div> */}
 
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
                     id="remember-me"
@@ -80,11 +88,10 @@ export default function Login() {
                     Forgot password?
                   </a>
                 </div>
-              </div>
+              </div> */}
 
               <div>
                 <button
-                  onClick={() => navigate("/chat")}
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
@@ -93,7 +100,7 @@ export default function Login() {
               </div>
             </form>
 
-            <div>
+            {/* <div>
               <div className="relative mt-10">
                 <div
                   className="absolute inset-0 flex items-center"
@@ -161,10 +168,10 @@ export default function Login() {
                   </span>
                 </a>
               </div>
-            </div>
+            </div> */}
           </div>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          {/* <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{" "}
             <a
               href="#"
@@ -172,7 +179,7 @@ export default function Login() {
             >
               Start a 14 day free trial
             </a>
-          </p>
+          </p> */}
         </div>
       </div>
     </>
