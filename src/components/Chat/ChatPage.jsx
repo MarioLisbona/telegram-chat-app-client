@@ -5,7 +5,6 @@ import ChatUserPanel from "./user panel/ChatUserPanel";
 export default function ChatPage({ socket }) {
   const [messages, setMessages] = useState([]);
   const lastMessageRef = useRef(null);
-  const [typingStatus, setTypingStatus] = useState("");
 
   useEffect(() => {
     // Function to handle incoming messages
@@ -44,11 +43,6 @@ export default function ChatPage({ socket }) {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // receiving the typing status from the server
-  useEffect(() => {
-    socket.on("typingResponse", (data) => setTypingStatus(data));
-  }, [socket]);
-
   return (
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
@@ -57,7 +51,6 @@ export default function ChatPage({ socket }) {
           messages={messages}
           socket={socket}
           lastMessageRef={lastMessageRef}
-          typingStatus={typingStatus}
         />
       </div>
     </div>
