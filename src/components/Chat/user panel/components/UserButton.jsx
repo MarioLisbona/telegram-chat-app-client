@@ -1,4 +1,3 @@
-import TypingStatus from "../../body/components/TypingStatus";
 import { useState, useEffect } from "react";
 
 export default function UserButton({ user, socket }) {
@@ -11,7 +10,7 @@ export default function UserButton({ user, socket }) {
         setShowTypingStatus(true);
         const timeoutId = setTimeout(() => {
           setShowTypingStatus(false);
-        }, 3000);
+        }, 2000);
         return () => clearTimeout(timeoutId);
       }
     });
@@ -25,30 +24,32 @@ export default function UserButton({ user, socket }) {
   const chatUser = localStorage.getItem("userName") == user.userName;
 
   return (
-    <div className="flex flex-col items-start justify-center">
-      <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-        <div
-          className={
-            "flex items-center justify-center h-8 w-8 bg-orange-200 rounded-full"
-          }
-        >
-          {showTypingStatus ? (
-            <span className="relative flex h-6 w-6">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-            </span>
-          ) : (
-            userInitial
-          )}
+    <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
+      <div
+        className={
+          "flex items-center justify-center h-8 w-8 bg-orange-200 rounded-full"
+        }
+      >
+        {showTypingStatus ? (
+          <span className="relative flex h-6 w-6">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+          </span>
+        ) : (
+          userInitial
+        )}
+      </div>
+      <div className="flex flex-col justify-center items-start">
+        <div className="ml-2 text-sm">
+          <div
+            className={`${
+              chatUser ? "text-indigo-500 font-bold" : "font-semibold"
+            }`}
+          >
+            {user.userName}
+          </div>
         </div>
-
-        <div
-          className={`ml-2 text-sm  ${
-            chatUser ? "text-indigo-500 font-bold" : "font-semibold"
-          }`}
-        >
-          {user.userName}
-        </div>
-      </button>
-    </div>
+        {showTypingStatus && <div className="text-xs ml-2">typing</div>}
+      </div>
+    </button>
   );
 }
