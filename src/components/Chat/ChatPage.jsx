@@ -8,7 +8,7 @@ export default function ChatPage({ socket }) {
   const lastMessageRef = useRef(null);
 
   useEffect(() => {
-    // Function to handle incoming messages
+    // Function to handle incoming messagesResponse from server
     const handleMessageResponse = (data) => {
       // spread new message object into messages array
       setMessages([...messages, data]);
