@@ -12,7 +12,7 @@ export default function ActiveUser({ users, socket }) {
           {users.length}
         </span>
       </div>
-      <div className="flex flex-col space-y-1 mt-4 -mx-2 h-48 overflow-y-auto">
+      <div className="flex flex-col space-y-1 mt-4 -mx-2 overflow-y-auto">
         {sortedUsers.map((user, idx) => (
           <UserButton user={user} key={idx} socket={socket} />
         ))}
