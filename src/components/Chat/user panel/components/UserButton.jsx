@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export default function UserButton({ user, socket }) {
   const [showTypingStatus, setShowTypingStatus] = useState(false);
 
+  // useEffect to set timeout for rendering component when user is typing
   useEffect(() => {
     socket.on("typingResponse", (data) => {
       if (data === user.userName) {
@@ -21,7 +22,6 @@ export default function UserButton({ user, socket }) {
   }, [socket, user.userName]);
 
   const userInitial = user.userName.charAt(0).toUpperCase();
-  // set username
   const chatUser = localStorage.getItem("userName") == user.userName;
 
   return (
