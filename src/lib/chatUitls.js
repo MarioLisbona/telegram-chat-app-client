@@ -12,3 +12,10 @@ export const sortArrayByUsername = (users, userName) => {
   // Return the rearranged array
   return users;
 };
+
+// remove username from localStorage, relocate and reload window
+export const handleLeaveChat = (navigate) => {
+  localStorage.removeItem("userName");
+  navigate("/");
+  window.location.reload();
+};

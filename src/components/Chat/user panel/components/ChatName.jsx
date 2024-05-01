@@ -1,21 +1,27 @@
+import { handleLeaveChat } from "../../../../lib/chatUitls";
+import { useNavigate } from "react-router-dom";
+
 export default function ChatName({ chatTitle }) {
+  const navigate = useNavigate();
   return (
-    <div className="flex flex-row items-center justify-center h-12 w-full">
-      <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10">
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-          ></path>
-        </svg>
+    <div className="flex flex-row items-center justify-around h-12 w-full">
+      <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-5 w-5">
+        <button onClick={() => handleLeaveChat(navigate)}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+            />
+          </svg>
+        </button>
       </div>
       <div className="ml-2 font-bold text-2xl">{chatTitle}</div>
     </div>
