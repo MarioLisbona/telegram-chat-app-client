@@ -1,9 +1,7 @@
 import { useState } from "react";
 
-export default function ChatFooter({ socket, typingStatus }) {
+export default function ChatFooter({ socket }) {
   const [message, setMessage] = useState("");
-
-  console.log("typing status", typingStatus);
 
   // send message to server on click event send button
   const handleSendMessage = (e) => {
@@ -22,7 +20,7 @@ export default function ChatFooter({ socket, typingStatus }) {
 
   // emit message when users is typing - used with onKeyDown in component
   const handleTyping = () =>
-    socket.emit("typing", `${localStorage.getItem("userName")} is typing`);
+    socket.emit("typing", localStorage.getItem("userName"));
   return (
     <form onSubmit={handleSendMessage}>
       <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
