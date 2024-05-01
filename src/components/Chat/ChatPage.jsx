@@ -4,6 +4,7 @@ import ChatUserPanel from "./user panel/ChatUserPanel";
 
 export default function ChatPage({ socket }) {
   const [messages, setMessages] = useState([]);
+  const [setMessages] = useState([]);
   const lastMessageRef = useRef(null);
 
   useEffect(() => {
@@ -15,8 +16,10 @@ export default function ChatPage({ socket }) {
 
     // Function to handle incoming Telegram messages
     const handleTelegramMessage = (data) => {
+      console.log("telegram message", data);
       // create new message object with telegram message data
       const telegramMessage = {
+        chatTitle: data.chat.title,
         text: data.text,
         name: `(telegram) ${data.from.first_name} ${data.from.last_name}`,
         id: `${data.chat.id}-${data.chat.date}-${data.message_id}`,
