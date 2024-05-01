@@ -1,4 +1,4 @@
-export default function ChatName() {
+export default function ChatName({ chatTitle }) {
   return (
     <div className="flex flex-row items-center justify-center h-12 w-full">
       <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10">
@@ -17,7 +17,7 @@ export default function ChatName() {
           ></path>
         </svg>
       </div>
-      <div className="ml-2 font-bold text-2xl">Chat Name</div>
+      <div className="ml-2 font-bold text-2xl">{chatTitle}</div>
     </div>
   );
 }

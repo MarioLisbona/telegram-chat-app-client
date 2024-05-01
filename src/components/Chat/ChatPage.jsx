@@ -4,7 +4,7 @@ import ChatUserPanel from "./user panel/ChatUserPanel";
 
 export default function ChatPage({ socket }) {
   const [messages, setMessages] = useState([]);
-  const [setMessages] = useState([]);
+  const [chatTitle, setChatTitle] = useState("");
   const lastMessageRef = useRef(null);
 
   useEffect(() => {
@@ -16,10 +16,9 @@ export default function ChatPage({ socket }) {
 
     // Function to handle incoming Telegram messages
     const handleTelegramMessage = (data) => {
-      console.log("telegram message", data);
       // create new message object with telegram message data
       const telegramMessage = {
-        chatTitle: data.chat.title,
+        chat: data.chat.title,
         text: data.text,
         name: `(telegram) ${data.from.first_name} ${data.from.last_name}`,
         id: `${data.chat.id}-${data.chat.date}-${data.message_id}`,
@@ -28,6 +27,7 @@ export default function ChatPage({ socket }) {
 
       // spread new telegram message object into messages array
       setMessages([...messages, telegramMessage]);
+      setChatTitle(data.chat.title);
     };
 
     // callbacks for different responses received on socket
@@ -49,7 +49,7 @@ export default function ChatPage({ socket }) {
   return (
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
-        <ChatUserPanel socket={socket} />
+        <ChatUserPanel socket={socket} chatTitle={chatTitle} />
         <ChatBody
           messages={messages}
           socket={socket}
