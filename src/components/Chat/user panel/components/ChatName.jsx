@@ -23,7 +23,9 @@ export default function ChatName({ chatTitle }) {
           </svg>
         </button>
       </div>
-      <div className="ml-2 font-bold text-2xl">{chatTitle}</div>
+      <div className="ml-2 font-bold text-2xl">
+        {chatTitle ? chatTitle : "Chat title"}
+      </div>
     </div>
   );
 }
