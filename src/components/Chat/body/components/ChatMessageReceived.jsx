@@ -6,13 +6,15 @@ export default function ChatMessageReceived({ message }) {
 
   return (
     <div className="col-start-1 col-end-8 p-3 rounded-lg">
-      <div className="flex flex-col item-center">
+      <div className="flex flex-col items-start">
         <div className="text-xs mb-1">{userName}</div>
-        <div className="flex flex-row items-center">
-          <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-            {userInitial}
+        <div className="flex items-start justify-start">
+          <div className="flex">
+            <div className="flex-shrink-0 top-0 left-0 flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500">
+              {userInitial}
+            </div>
           </div>
-          <div className="relative ml-3 text-sm font-medium bg-white py-2 px-4 shadow rounded-xl rounded-tl-none">
+          <div className="relative ml-3 text-sm font-medium bg-white py-2 px-4 shadow rounded-xl rounded-tl-none flex-grow">
             <div>{text}</div>
           </div>
         </div>
