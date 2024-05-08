@@ -45,7 +45,7 @@ export default function Login({ socket }) {
                 </div>
               </div>
 
-              {/* <div>
+              <div>
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -62,11 +62,11 @@ export default function Login({ socket }) {
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-              </div> */}
+              </div>
 
-              {/* <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <input
+                  {/* <input
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
@@ -77,7 +77,7 @@ export default function Login({ socket }) {
                     className="ml-3 block text-sm leading-6 text-gray-900"
                   >
                     Remember me
-                  </label>
+                  </label> */}
                 </div>
 
                 <div className="text-sm leading-6">
@@ -88,7 +88,7 @@ export default function Login({ socket }) {
                     Forgot password?
                   </a>
                 </div>
-              </div> */}
+              </div>
 
               <div>
                 <button
@@ -100,7 +100,7 @@ export default function Login({ socket }) {
               </div>
             </form>
 
-            {/* <div>
+            <div>
               <div className="relative mt-10">
                 <div
                   className="absolute inset-0 flex items-center"
@@ -168,18 +168,8 @@ export default function Login({ socket }) {
                   </span>
                 </a>
               </div>
-            </div> */}
+            </div>
           </div>
-
-          {/* <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{" "}
-            <a
-              href="#"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Start a 14 day free trial
-            </a>
-          </p> */}
         </div>
       </div>
     </>
