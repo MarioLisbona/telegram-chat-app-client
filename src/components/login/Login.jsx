@@ -21,6 +21,14 @@ export default function Login({ socket }) {
     console.log("Current User:", user);
   }, [user]);
 
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (user) navigate("/chat");
+  }, [user, loading]);
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">

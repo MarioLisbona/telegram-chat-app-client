@@ -16,6 +16,7 @@ export default function ChatPage({ socket }) {
 
     // Function to handle incoming Telegram messages
     const handleTelegramMessage = (data) => {
+      console.log("data inside handleTelegramMessage\n ", data);
       // create new message object with telegram message data
       const telegramMessage = {
         chat: data.chat.title,
