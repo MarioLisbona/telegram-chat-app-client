@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { handleSubmit } from "../../lib/formUtils";
+import { signInWithGoogle } from "../../lib/firebase";
 export default function Login({ socket }) {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
@@ -116,7 +117,8 @@ export default function Login({ socket }) {
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <a
+                <button
+                  onClick={signInWithGoogle}
                   href="#"
                   className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
                 >
@@ -145,12 +147,9 @@ export default function Login({ socket }) {
                   <span className="text-sm font-semibold leading-6">
                     Google
                   </span>
-                </a>
+                </button>
 
-                <a
-                  href="#"
-                  className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
-                >
+                <button className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent">
                   <svg
                     className="h-5 w-5 fill-[#24292F]"
                     aria-hidden="true"
@@ -166,7 +165,7 @@ export default function Login({ socket }) {
                   <span className="text-sm font-semibold leading-6">
                     GitHub
                   </span>
-                </a>
+                </button>
               </div>
             </div>
           </div>
