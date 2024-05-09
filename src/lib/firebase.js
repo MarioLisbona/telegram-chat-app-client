@@ -108,6 +108,23 @@ const sendPasswordReset = async (email) => {
   }
 };
 
+const getOnlineUsers = async () => {
+  try {
+    const q = query(collection(db, "users"), where("online", "==", true));
+    const querySnapshot = await getDocs(q);
+    const onlineUsers = [];
+    querySnapshot.forEach((doc) => {
+      onlineUsers.push(doc.data());
+    });
+    // return onlineUsers;
+    console.log("Online users", onlineUsers);
+  } catch (err) {
+    console.error(err);
+    // Handle error
+    return [];
+  }
+};
+
 export {
   auth,
   db,
@@ -115,4 +132,5 @@ export {
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
   sendPasswordReset,
+  getOnlineUsers,
 };
