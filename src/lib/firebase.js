@@ -116,8 +116,8 @@ const getOnlineUsers = async () => {
     querySnapshot.forEach((doc) => {
       onlineUsers.push(doc.data());
     });
-    // return onlineUsers;
     console.log("Online users", onlineUsers);
+    return onlineUsers;
   } catch (err) {
     console.error(err);
     // Handle error
