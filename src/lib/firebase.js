@@ -12,6 +12,9 @@ import {
   getFirestore,
   query,
   getDocs,
+  getDoc,
+  doc,
+  setDoc,
   collection,
   where,
   addDoc,
@@ -32,18 +35,36 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const googleProvider = new GoogleAuthProvider();
+
 const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
-    const q = query(collection(db, "users"), where("uid", "==", user.uid));
-    const docs = await getDocs(q);
-    if (docs.docs.length === 0) {
-      await addDoc(collection(db, "users"), {
+
+    // Update user's online status in Firestore
+    const userRef = doc(db, "users", user.uid);
+    await setDoc(
+      userRef,
+      {
         uid: user.uid,
         name: user.displayName,
         authProvider: "google",
         email: user.email,
+        // Add a field to indicate the user is online
+        online: true,
+      },
+      { merge: true }
+    ); // Merge with existing document if it exists
+
+    // Check if the user exists and add them if they don't
+    const userDoc = await getDoc(userRef);
+    if (!userDoc.exists()) {
+      await setDoc(userRef, {
+        uid: user.uid,
+        name: user.displayName,
+        authProvider: "google",
+        email: user.email,
+        online: true,
       });
     }
   } catch (err) {
@@ -87,10 +108,6 @@ const sendPasswordReset = async (email) => {
   }
 };
 
-const logout = () => {
-  signOut(auth);
-};
-
 export {
   auth,
   db,
@@ -98,5 +115,4 @@ export {
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
   sendPasswordReset,
-  logout,
 };
