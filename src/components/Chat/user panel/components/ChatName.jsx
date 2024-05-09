@@ -1,10 +1,9 @@
-import { handleLeaveChat } from "../../../../lib/chatUitls";
 import { useNavigate } from "react-router-dom";
 import { signOutUser, auth } from "../../../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function ChatName({ chatTitle }) {
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const navigate = useNavigate();
   return (
     <div className="flex flex-row items-center justify-start h-12 w-full">
