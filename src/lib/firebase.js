@@ -127,7 +127,7 @@ const getOnlineUsers = async () => {
 
 const signOutUser = async () => {
   try {
-    await auth.signOut();
+    await signOut();
 
     // Update user's online status in Firestore to false
     const user = auth.currentUser;
