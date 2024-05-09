@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { handleSubmit } from "../../lib/formUtils";
 export default function Login({ socket }) {
-  const navigate = useNavigate();
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // handling user login
-  const loginUser = handleSubmit(socket, userName, navigate);
+  useEffect(() => {
+    console.log("email", email);
+    console.log("password", password);
+  });
 
   return (
     <>
@@ -24,7 +26,7 @@ export default function Login({ socket }) {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <form className="space-y-6" onSubmit={loginUser}>
+            <form className="space-y-6">
               <div>
                 <label
                   htmlFor="email"
@@ -34,7 +36,7 @@ export default function Login({ socket }) {
                 </label>
                 <div className="mt-2">
                   <input
-                    onChange={(e) => setUserName(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     id="email"
                     name="email"
                     // type="email"
@@ -54,6 +56,7 @@ export default function Login({ socket }) {
                 </label>
                 <div className="mt-2">
                   <input
+                    onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     name="password"
                     type="password"
