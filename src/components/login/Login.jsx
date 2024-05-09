@@ -1,13 +1,25 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { handleSubmit } from "../../lib/formUtils";
-import { signInWithGoogle } from "../../lib/firebase";
+import {
+  auth,
+  signInWithGoogle,
+  signOutUser,
+  getOnlineUsers,
+} from "../../lib/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 export default function Login({ socket }) {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState("");
+  const [user, loading, error] = useAuthState(auth);
 
+  const [userName, setUserName] = useState("");
   // handling user login
   const loginUser = handleSubmit(socket, userName, navigate);
+
+  useEffect(() => {
+    console.log("Current User:", user);
+  }, [user]);
 
   return (
     <>
@@ -25,7 +37,7 @@ export default function Login({ socket }) {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <form className="space-y-6" onSubmit={loginUser}>
+            <form className="space-y-6">
               <div>
                 <label
                   htmlFor="email"
@@ -93,10 +105,24 @@ export default function Login({ socket }) {
 
               <div>
                 <button
-                  type="submit"
+                  // type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Sign in
+                </button>
+                <button
+                  onClick={() => signOutUser(navigate)}
+                  // type="submit"
+                  className="flex w-full justify-center rounded-md bg-red-600 mt-2 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Sign Out
+                </button>
+                <button
+                  onClick={() => getOnlineUsers()}
+                  // type="submit"
+                  className="flex w-full justify-center rounded-md bg-green-600 mt-2 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  getOnlineUsers
                 </button>
               </div>
             </form>
@@ -118,7 +144,7 @@ export default function Login({ socket }) {
 
               <div className="mt-6 grid grid-cols-2 gap-4">
                 <button
-                  onClick={signInWithGoogle}
+                  onClick={() => signInWithGoogle()}
                   href="#"
                   className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
                 >

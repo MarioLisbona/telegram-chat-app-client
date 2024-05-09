@@ -125,16 +125,17 @@ const getOnlineUsers = async () => {
   }
 };
 
-const signOutUser = async () => {
+const signOutUser = async (navigate) => {
   try {
-    await signOut();
+    const user = auth.currentUser; // Get the current user before signing out
+    await signOut(auth);
 
     // Update user's online status in Firestore to false
-    const user = auth.currentUser;
     if (user) {
       const userRef = doc(db, "users", user.uid);
       await setDoc(userRef, { online: false }, { merge: true });
     }
+    navigate("/");
   } catch (err) {
     console.error(err);
     alert(err.message);
