@@ -125,6 +125,22 @@ const getOnlineUsers = async () => {
   }
 };
 
+const signOutUser = async () => {
+  try {
+    await auth.signOut();
+
+    // Update user's online status in Firestore to false
+    const user = auth.currentUser;
+    if (user) {
+      const userRef = doc(db, "users", user.uid);
+      await setDoc(userRef, { online: false }, { merge: true });
+    }
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+
 export {
   auth,
   db,
@@ -133,4 +149,5 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   getOnlineUsers,
+  signOutUser,
 };
