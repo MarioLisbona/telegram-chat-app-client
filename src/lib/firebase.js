@@ -18,12 +18,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDzW-3cUXAARrxIzVQCfmsknbq9W83MFbg",
-  authDomain: "fir-auth-article-8fb78.firebaseapp.com",
-  projectId: "fir-auth-article-8fb78",
-  storageBucket: "fir-auth-article-8fb78.appspot.com",
-  messagingSenderId: "795369820110",
-  appId: "1:795369820110:web:53e835033a0c6fdd17259f",
+  apiKey: "AIzaSyAY4ULvF_Ej9KzxhmhncrJnz0mtsUlX0QE",
+  authDomain: "telegram-chat-app-9cdaf.firebaseapp.com",
+  projectId: "telegram-chat-app-9cdaf",
+  storageBucket: "telegram-chat-app-9cdaf.appspot.com",
+  messagingSenderId: "317338133891",
+  appId: "1:317338133891:web:c36d3a76ae1d9cf48242b6",
+  measurementId: "G-TE95QYNC3P",
 };
 
 const app = initializeApp(firebaseConfig);
