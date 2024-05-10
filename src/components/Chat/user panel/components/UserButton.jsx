@@ -1,6 +1,9 @@
+// eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
 
+// eslint-disable-next-line no-unused-vars
 export default function UserButton({ userID, onlineUser, socket }) {
+  // eslint-disable-next-line no-unused-vars
   const [showTypingStatus, setShowTypingStatus] = useState(false);
 
   // useEffect to set timeout for rendering component when user is typing
