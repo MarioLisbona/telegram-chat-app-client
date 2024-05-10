@@ -27,10 +27,6 @@ export default function ActiveUser({ socket }) {
   useEffect(() => {
     if (user && user.uid) {
       setUserId(user.uid);
-      // Continue with your logic that depends on userID
-    } else {
-      // Handle the case where the user is not logged in
-      console.error("User is not logged in.");
     }
   }, []); // Empty dependency array ensures this effect runs only once on mount
 
