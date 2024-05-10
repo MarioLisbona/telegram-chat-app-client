@@ -1,35 +1,37 @@
 import UserButton from "./UserButton";
 // import { sortArrayByUsername } from "../../../../lib/chatUitls";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../../lib/firebase";
+import { auth, db } from "../../../../lib/firebase";
 import { useState, useEffect } from "react";
 import { getOnlineUsers } from "../../../../lib/firebase";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 export default function ActiveUser({ socket }) {
   const [user] = useAuthState(auth);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [userId, setUserId] = useState("");
 
-  // set he state for onlineUsers with the returned array of users from firestore db
-  // need to create an async function inside use effect and then call it
   useEffect(() => {
-    async function getUsers() {
-      const returnedUsers = await getOnlineUsers();
-      setOnlineUsers(returnedUsers);
-    }
+    const getUsers = async () => {
+      const q = query(collection(db, "users"), where("online", "==", true));
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const updatedOnlineUsers = [];
+        snapshot.forEach((doc) => {
+          updatedOnlineUsers.push(doc.data());
+        });
+        setOnlineUsers(updatedOnlineUsers);
+      });
+      return unsubscribe;
+    };
 
     getUsers();
-  }, []);
+  }, []); // Empty dependency array ensures this effect runs only once on mount
 
-  // create a variable with the email address of the user using this client connection
-  // used to find this clients user in the onlineUsers array
-  // Check if the user is logged in before accessing user.uid
   useEffect(() => {
     if (user && user.uid) {
       setUserId(user.uid);
     }
-  }, []); // Empty dependency array ensures this effect runs only once on mount
-
+  }, [user]); // Update when user changes
   return (
     <div className="flex flex-col mt-8">
       <div className="flex flex-row items-center justify-between text-xs">
