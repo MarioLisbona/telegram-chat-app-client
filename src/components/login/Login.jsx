@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { handleSubmit } from "../../lib/formUtils";
+import { useEffect } from "react";
+
 import {
   auth,
   signInWithGoogle,
@@ -9,9 +9,9 @@ import {
 } from "../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-export default function Login({ socket }) {
+export default function Login() {
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
 
   // const [userName, setUserName] = useState("");
 
@@ -21,6 +21,7 @@ export default function Login({ socket }) {
       return;
     }
     if (user) navigate("/chat");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
 
   return (
@@ -49,7 +50,7 @@ export default function Login({ socket }) {
                 </label>
                 <div className="mt-2">
                   <input
-                    onChange={(e) => setUserName(e.target.value)}
+                    onChange={(e) => console.log(e.target.value)}
                     id="email"
                     name="email"
                     // type="email"
