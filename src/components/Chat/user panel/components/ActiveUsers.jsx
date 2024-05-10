@@ -1,10 +1,9 @@
 import UserButton from "./UserButton";
 // import { sortArrayByUsername } from "../../../../lib/chatUitls";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../../../lib/firebase";
+import { auth } from "../../../../lib/firebase";
 import { useState, useEffect } from "react";
 import { getOnlineUsers } from "../../../../lib/firebase";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 export default function ActiveUser({ socket }) {
   const [user] = useAuthState(auth);
@@ -12,20 +11,8 @@ export default function ActiveUser({ socket }) {
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    const getUsers = async () => {
-      const q = query(collection(db, "users"), where("online", "==", true));
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        const updatedOnlineUsers = [];
-        snapshot.forEach((doc) => {
-          updatedOnlineUsers.push(doc.data());
-        });
-        setOnlineUsers(updatedOnlineUsers);
-      });
-      return unsubscribe;
-    };
-
-    getUsers();
-  }, []); // Empty dependency array ensures this effect runs only once on mount
+    getOnlineUsers(setOnlineUsers);
+  }, []);
 
   useEffect(() => {
     if (user && user.uid) {
