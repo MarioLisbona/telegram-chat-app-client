@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { initializeSocket } from "./lib/socketUtils.js";
 import Login from "./components/login/Login.jsx";
 import ChatPage from "./components/Chat/ChatPage.jsx";
+import Register from "./components/register/Register.jsx";
 
 export default function App() {
   const [socket, setSocket] = useState(null);
@@ -32,6 +33,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login socket={socket} />}></Route>
+        <Route path="/register" element={<Register />}></Route>
         <Route path="/chat" element={<ChatPage socket={socket} />}></Route>
         {/* <Route path="/" element={<Home socket={socket} />}></Route>
         <Route path="/chat" element={<ChatPage socket={socket} />}></Route> */}
