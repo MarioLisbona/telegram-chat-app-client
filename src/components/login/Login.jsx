@@ -77,8 +77,11 @@ export default function Login() {
 
               <div className="flex items-center justify-between">
                 <div className="text-sm leading-6">
-                  <a href="#" className="font-semibold hover:text-slate-500">
-                    Sign Up
+                  <a
+                    href="/register"
+                    className="font-semibold hover:text-slate-500"
+                  >
+                    Register
                   </a>
                 </div>
 
