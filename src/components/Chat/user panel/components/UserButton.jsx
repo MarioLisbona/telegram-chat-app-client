@@ -1,27 +1,27 @@
 import { useState, useEffect } from "react";
 
-export default function UserButton({ user, socket }) {
+export default function UserButton({ userID, onlineUser, socket }) {
   const [showTypingStatus, setShowTypingStatus] = useState(false);
 
   // useEffect to set timeout for rendering component when user is typing
-  useEffect(() => {
-    socket.on("typingResponse", (data) => {
-      if (data === user.userName) {
-        setShowTypingStatus(true);
-        const timeoutId = setTimeout(() => {
-          setShowTypingStatus(false);
-        }, 2000);
-        return () => clearTimeout(timeoutId);
-      }
-    });
+  // useEffect(() => {
+  //   socket.on("typingResponse", (data) => {
+  //     if (data === user.userName) {
+  //       setShowTypingStatus(true);
+  //       const timeoutId = setTimeout(() => {
+  //         setShowTypingStatus(false);
+  //       }, 2000);
+  //       return () => clearTimeout(timeoutId);
+  //     }
+  //   });
 
-    return () => {
-      socket.off("typingResponse");
-    };
-  }, [socket, user.userName]);
+  //   return () => {
+  //     socket.off("typingResponse");
+  //   };
+  // }, [socket, user.userName]);
 
-  const userInitial = user.userName.charAt(0).toUpperCase();
-  const chatUser = localStorage.getItem("userName") == user.userName;
+  const userInitial = onlineUser.name.charAt(0).toUpperCase();
+  const clientUser = onlineUser.uid == userID;
 
   return (
     <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
@@ -42,10 +42,10 @@ export default function UserButton({ user, socket }) {
         <div className="ml-2 text-sm">
           <div
             className={`${
-              chatUser ? "text-indigo-500 font-bold" : "font-semibold"
+              clientUser ? "text-indigo-500 font-bold" : "font-semibold"
             }`}
           >
-            {user.userName}
+            {onlineUser.name}
           </div>
         </div>
         {showTypingStatus && <div className="text-xs ml-2">typing</div>}
