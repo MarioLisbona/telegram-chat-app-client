@@ -8,6 +8,7 @@ import { getOnlineUsers } from "../../../../lib/firebase";
 export default function ActiveUser({ socket }) {
   const [user] = useAuthState(auth);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [userId, setUserId] = useState("");
 
   // set he state for onlineUsers with the returned array of users from firestore db
   // need to create an async function inside use effect and then call it
@@ -22,7 +23,16 @@ export default function ActiveUser({ socket }) {
 
   // create a variable with the email address of the user using this client connection
   // used to find this clients user in the onlineUsers array
-  const userID = user.uid;
+  // Check if the user is logged in before accessing user.uid
+  useEffect(() => {
+    if (user && user.uid) {
+      setUserId(user.uid);
+      // Continue with your logic that depends on userID
+    } else {
+      // Handle the case where the user is not logged in
+      console.error("User is not logged in.");
+    }
+  }, []); // Empty dependency array ensures this effect runs only once on mount
 
   return (
     <div className="flex flex-col mt-8">
@@ -36,7 +46,7 @@ export default function ActiveUser({ socket }) {
         {onlineUsers &&
           onlineUsers.map((onlineUser, idx) => (
             <UserButton
-              userID={userID}
+              userId={userId}
               onlineUser={onlineUser}
               key={idx}
               socket={socket}
