@@ -13,13 +13,7 @@ export default function Login({ socket }) {
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
 
-  const [userName, setUserName] = useState("");
-  // handling user login
-  const loginUser = handleSubmit(socket, userName, navigate);
-
-  useEffect(() => {
-    console.log("Current User:", user);
-  }, [user]);
+  // const [userName, setUserName] = useState("");
 
   useEffect(() => {
     if (loading) {
