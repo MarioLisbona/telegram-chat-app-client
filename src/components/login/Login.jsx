@@ -1,12 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-import {
-  auth,
-  signInWithGoogle,
-  signOutUser,
-  getOnlineUsers,
-} from "../../lib/firebase";
+import { auth, signInWithGoogle } from "../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Login() {
