@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../lib/firebase";
 import { getOnlineUsers } from "../../../lib/firebase";
+import { formattedDateTime } from "../../../lib/generalUtils";
 
 export default function ChatFooter({ socket }) {
   const [message, setMessage] = useState("");
@@ -17,7 +18,7 @@ export default function ChatFooter({ socket }) {
   // UserObject data for this user from firestore
   const thisUserObject = onlineUsers[0];
 
-  // send message to server on click event send button
+  // // send message to server on click event send button
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (message.trim() && localStorage.getItem("userName")) {
@@ -26,7 +27,7 @@ export default function ChatFooter({ socket }) {
         name: thisUserObject.name,
         id: thisUserObject.uid,
         socketID: socket.id,
-        datetime: new Date().toISOString(), // Add the current datetime
+        datetime: formattedDateTime,
       });
     }
     // clear chat text box
@@ -42,7 +43,7 @@ export default function ChatFooter({ socket }) {
   };
 
   return (
-    <form onSubmit={handleSendMessage}>
+    <form onSubmit={(e) => handleSendMessage(e)}>
       <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
         <div></div>
         <div className="flex-grow ml-4">
