@@ -14,7 +14,9 @@ export default function ChatFooter({ socket }) {
     getOnlineUsers(setOnlineUsers, user);
   }, []);
 
+  // UserObject data for this user from firestore
   const thisUserObject = onlineUsers[0];
+
   // send message to server on click event send button
   const handleSendMessage = (e) => {
     e.preventDefault();
