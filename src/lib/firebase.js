@@ -109,14 +109,26 @@ const sendPasswordReset = async (email) => {
   }
 };
 
-const getOnlineUsers = async (setOnlineUsers) => {
+function moveObjectWithUIDToStart(array, uid) {
+  const index = array.findIndex((item) => item.uid === uid);
+  if (index !== -1) {
+    const objToMove = array.splice(index, 1)[0]; // Remove the object from its current position
+    array.unshift(objToMove); // Move the object to the beginning of the array
+  }
+  return array;
+}
+
+const getOnlineUsers = async (setOnlineUsers, user) => {
   const q = query(collection(db, "users"), where("online", "==", true));
   const unsubscribe = onSnapshot(q, (snapshot) => {
     const updatedOnlineUsers = [];
     snapshot.forEach((doc) => {
       updatedOnlineUsers.push(doc.data());
     });
-    setOnlineUsers(updatedOnlineUsers);
+    // sort array with this user at position 1 at top of active users list
+    const sortedArray = moveObjectWithUIDToStart(updatedOnlineUsers, user.uid);
+    // set state for onlineUsers
+    setOnlineUsers(sortedArray);
   });
   return unsubscribe;
 };
