@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../lib/firebase";
 
 export default function ChatFooter({ socket }) {
   const [message, setMessage] = useState("");
+  const [user] = useAuthState(auth);
 
   // send message to server on click event send button
   const handleSendMessage = (e) => {
@@ -22,7 +25,7 @@ export default function ChatFooter({ socket }) {
   const handleTyping = (e) => {
     // dont emit for enter button
     if (e.key !== "Enter") {
-      socket.emit("typing", localStorage.getItem("userName"));
+      socket.emit("typing", user.uid);
     }
   };
   return (
