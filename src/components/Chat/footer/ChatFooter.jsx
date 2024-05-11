@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../lib/firebase";
 import { getOnlineUsers } from "../../../lib/firebase";
-import { formattedDateTime } from "../../../lib/generalUtils";
+import { formatDateTime } from "../../../lib/generalUtils";
 
 export default function ChatFooter({ socket }) {
   const [message, setMessage] = useState("");
@@ -17,6 +17,10 @@ export default function ChatFooter({ socket }) {
 
   // UserObject data for this user from firestore
   const thisUserObject = onlineUsers[0];
+
+  // create now instnace and return formatted datetime
+  const now = new Date();
+  const formattedDateTime = formatDateTime(now);
 
   // // send message to server on click event send button
   const handleSendMessage = (e) => {
