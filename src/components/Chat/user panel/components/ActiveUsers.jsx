@@ -20,10 +20,6 @@ export default function ActiveUser({ socket }) {
     }
   }, [user]); // Update when user changes
 
-  useEffect(() => {
-    console.log("ActiveUser - onlineUsers-->", onlineUsers);
-  }, []); // Update when user changes
-
   return (
     <div className="flex flex-col mt-8">
       <div className="flex flex-row items-center justify-between text-xs">
