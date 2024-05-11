@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { registerWithEmailAndPassword } from "../../lib/firebase";
 
 export default function Register() {
