@@ -11,7 +11,7 @@ export default function ActiveUser({ socket }) {
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    getOnlineUsers(setOnlineUsers);
+    getOnlineUsers(setOnlineUsers, user);
   }, []);
 
   useEffect(() => {
@@ -19,6 +19,11 @@ export default function ActiveUser({ socket }) {
       setUserId(user.uid);
     }
   }, [user]); // Update when user changes
+
+  useEffect(() => {
+    console.log("ActiveUser - onlineUsers-->", onlineUsers);
+  }, []); // Update when user changes
+
   return (
     <div className="flex flex-col mt-8">
       <div className="flex flex-row items-center justify-between text-xs">
