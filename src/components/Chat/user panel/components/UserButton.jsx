@@ -7,21 +7,21 @@ export default function UserButton({ userId, onlineUser, socket }) {
   const [showTypingStatus, setShowTypingStatus] = useState(false);
 
   // useEffect to set timeout for rendering component when user is typing
-  // useEffect(() => {
-  //   socket.on("typingResponse", (data) => {
-  //     if (data === user.userName) {
-  //       setShowTypingStatus(true);
-  //       const timeoutId = setTimeout(() => {
-  //         setShowTypingStatus(false);
-  //       }, 2000);
-  //       return () => clearTimeout(timeoutId);
-  //     }
-  //   });
+  useEffect(() => {
+    socket.on("typingResponse", (data) => {
+      if (data === onlineUser.uid) {
+        setShowTypingStatus(true);
+        const timeoutId = setTimeout(() => {
+          setShowTypingStatus(false);
+        }, 2000);
+        return () => clearTimeout(timeoutId);
+      }
+    });
 
-  //   return () => {
-  //     socket.off("typingResponse");
-  //   };
-  // }, [socket, user.userName]);
+    return () => {
+      socket.off("typingResponse");
+    };
+  }, [socket]);
   const userInitial = onlineUser.name.charAt(0).toUpperCase();
   const thisUser = onlineUser.uid === userId;
 
