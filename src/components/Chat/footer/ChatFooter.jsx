@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../lib/firebase";
+import { getOnlineUsers } from "../../../lib/firebase";
 
 export default function ChatFooter({ socket }) {
   const [message, setMessage] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const [user] = useAuthState(auth);
 
+  // This is working right now.
+  // TODO: create function to return This user object
+  useEffect(() => {
+    getOnlineUsers(setOnlineUsers, user);
+  }, []);
+
+  const thisUserObject = onlineUsers[0];
   // send message to server on click event send button
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (message.trim() && localStorage.getItem("userName")) {
       socket.emit("message", {
         text: message,
-        name: localStorage.getItem("userName"),
-        id: `${socket.id}${Math.random()}`,
+        name: thisUserObject.name,
+        id: thisUserObject.uid,
         socketID: socket.id,
       });
     }
@@ -28,6 +37,7 @@ export default function ChatFooter({ socket }) {
       socket.emit("typing", user.uid);
     }
   };
+
   return (
     <form onSubmit={handleSendMessage}>
       <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
