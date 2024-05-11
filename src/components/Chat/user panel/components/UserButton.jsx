@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 // eslint-disable-next-line no-unused-vars
-export default function UserButton({ userID, onlineUser, socket }) {
+export default function UserButton({ userId, onlineUser, socket }) {
   // eslint-disable-next-line no-unused-vars
   const [showTypingStatus, setShowTypingStatus] = useState(false);
 
@@ -22,9 +22,8 @@ export default function UserButton({ userID, onlineUser, socket }) {
   //     socket.off("typingResponse");
   //   };
   // }, [socket, user.userName]);
-
   const userInitial = onlineUser.name.charAt(0).toUpperCase();
-  const clientUser = onlineUser.uid == userID;
+  const thisUser = onlineUser.uid === userId;
 
   return (
     <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
@@ -45,7 +44,7 @@ export default function UserButton({ userID, onlineUser, socket }) {
         <div className="ml-2 text-sm">
           <div
             className={`${
-              clientUser ? "text-indigo-500 font-bold" : "font-semibold"
+              thisUser ? "text-indigo-500 font-bold" : "font-semibold"
             }`}
           >
             {onlineUser.name}
