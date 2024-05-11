@@ -26,6 +26,7 @@ export default function ChatFooter({ socket }) {
         name: thisUserObject.name,
         id: thisUserObject.uid,
         socketID: socket.id,
+        datetime: new Date().toISOString(), // Add the current datetime
       });
     }
     // clear chat text box
