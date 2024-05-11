@@ -3,6 +3,7 @@ export default function ChatMessageReceived({ message }) {
   const userName = message.name;
   const userInitial =
     message.name.charAt(0) == "(" ? "TG" : message.name.charAt(0).toUpperCase();
+  const timeSent = message.datetime;
 
   return (
     <div className="col-start-1 col-end-8 p-3 rounded-lg">
@@ -18,6 +19,7 @@ export default function ChatMessageReceived({ message }) {
             <div>{text}</div>
           </div>
         </div>
+        <div className="text-xs mt-1">{timeSent}</div>
       </div>
     </div>
   );
