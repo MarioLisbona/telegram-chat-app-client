@@ -119,6 +119,11 @@ function moveObjectWithUIDToStart(array, uid) {
 }
 
 const getOnlineUsers = async (setOnlineUsers, user) => {
+  if (!user) {
+    // Handle the case where the user object is null
+    return;
+  }
+
   const q = query(collection(db, "users"), where("online", "==", true));
   const unsubscribe = onSnapshot(q, (snapshot) => {
     const updatedOnlineUsers = [];

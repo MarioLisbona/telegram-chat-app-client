@@ -11,7 +11,7 @@ export default function ActiveUser({ socket }) {
 
   useEffect(() => {
     getOnlineUsers(setOnlineUsers, user);
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (user && user.uid) {
