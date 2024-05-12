@@ -16,6 +16,7 @@ export default function ChatPage({ socket }) {
 
     // Function to handle incoming Telegram messages
     const handleTelegramMessage = (data) => {
+      console.log("data inside handleTelegramMessage\n ", data);
       // create new message object with telegram message data
       const telegramMessage = {
         chat: data.chat.title,
@@ -30,7 +31,7 @@ export default function ChatPage({ socket }) {
       setChatTitle(data.chat.title);
     };
 
-    // callbacks for different responses received on socket
+    // callbacks for telegram and client responses received on socket
     socket.on("messageResponse", handleMessageResponse);
     socket.on("telegramMessage", handleTelegramMessage);
 
@@ -41,7 +42,7 @@ export default function ChatPage({ socket }) {
     };
   }, [socket, messages]);
 
-  // 👇️ scroll to bottom every time messages change
+  // scroll to bottom every time messages change
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);

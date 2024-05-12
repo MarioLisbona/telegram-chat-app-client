@@ -2,6 +2,7 @@ export default function ChatMessageSent({ message }) {
   const text = message.text;
   const userName = message.name;
   const userInitial = message.name.charAt(0).toUpperCase();
+  const timeSent = message.datetime;
 
   return (
     <div className="col-start-6 col-end-13 p-3 rounded-lg">
@@ -17,6 +18,7 @@ export default function ChatMessageSent({ message }) {
             </div>
           </div>
         </div>
+        <div className="text-xs mt-1">{timeSent}</div>
       </div>
     </div>
   );

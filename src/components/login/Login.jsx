@@ -1,12 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { handleSubmit } from "../../lib/formUtils";
-export default function Login({ socket }) {
-  const navigate = useNavigate();
-  const [userName, setUserName] = useState("");
+import { useEffect } from "react";
+import { auth, signInWithGoogle } from "../../lib/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-  // handling user login
-  const loginUser = handleSubmit(socket, userName, navigate);
+export default function Login() {
+  const navigate = useNavigate();
+  const [user, loading] = useAuthState(auth);
+
+  // useEffect to automatically load the chat page if the user is returned by useAuthState
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (user) navigate("/chat");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, loading]);
 
   return (
     <>
@@ -24,7 +33,7 @@ export default function Login({ socket }) {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <form className="space-y-6" onSubmit={loginUser}>
+            <form className="space-y-6">
               <div>
                 <label
                   htmlFor="email"
@@ -34,10 +43,10 @@ export default function Login({ socket }) {
                 </label>
                 <div className="mt-2">
                   <input
-                    onChange={(e) => setUserName(e.target.value)}
+                    onChange={(e) => console.log(e.target.value)}
                     id="email"
                     name="email"
-                    // type="email"
+                    type="email"
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -45,7 +54,7 @@ export default function Login({ socket }) {
                 </div>
               </div>
 
-              {/* <div>
+              <div>
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -62,45 +71,33 @@ export default function Login({ socket }) {
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-              </div> */}
+              </div>
 
-              {/* <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                  <label
-                    htmlFor="remember-me"
-                    className="ml-3 block text-sm leading-6 text-gray-900"
+              <div className="flex items-center justify-between">
+                <div className="text-sm leading-6">
+                  <a
+                    href="/register"
+                    className="font-semibold hover:text-slate-500"
                   >
-                    Remember me
-                  </label>
+                    Register
+                  </a>
                 </div>
 
                 <div className="text-sm leading-6">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
+                  <a href="#" className="font-semibold hover:text-slate-500">
                     Forgot password?
                   </a>
                 </div>
-              </div> */}
+              </div>
 
               <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
+                <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Sign in
                 </button>
               </div>
             </form>
 
-            {/* <div>
+            <div>
               <div className="relative mt-10">
                 <div
                   className="absolute inset-0 flex items-center"
@@ -116,7 +113,8 @@ export default function Login({ socket }) {
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <a
+                <button
+                  onClick={() => signInWithGoogle()}
                   href="#"
                   className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
                 >
@@ -145,12 +143,9 @@ export default function Login({ socket }) {
                   <span className="text-sm font-semibold leading-6">
                     Google
                   </span>
-                </a>
+                </button>
 
-                <a
-                  href="#"
-                  className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
-                >
+                <button className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent">
                   <svg
                     className="h-5 w-5 fill-[#24292F]"
                     aria-hidden="true"
@@ -166,20 +161,10 @@ export default function Login({ socket }) {
                   <span className="text-sm font-semibold leading-6">
                     GitHub
                   </span>
-                </a>
+                </button>
               </div>
-            </div> */}
+            </div>
           </div>
-
-          {/* <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{" "}
-            <a
-              href="#"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Start a 14 day free trial
-            </a>
-          </p> */}
         </div>
       </div>
     </>

@@ -1,17 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../lib/firebase";
+import { getOnlineUsers } from "../../../lib/firebase";
+import { formatDateTime } from "../../../lib/generalUtils";
 
 export default function ChatFooter({ socket }) {
   const [message, setMessage] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [user] = useAuthState(auth);
 
-  // send message to server on click event send button
+  // This is working right now.
+  // TODO: create function to return This user object
+  useEffect(() => {
+    getOnlineUsers(setOnlineUsers, user);
+  }, []);
+
+  // UserObject data for this user from firestore
+  const thisUserObject = onlineUsers[0];
+
+  // create now instnace and return formatted datetime
+  const now = new Date();
+  const formattedDateTime = formatDateTime(now);
+
+  // // send message to server on click event send button
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (message.trim() && localStorage.getItem("userName")) {
       socket.emit("message", {
         text: message,
-        name: localStorage.getItem("userName"),
-        id: `${socket.id}${Math.random()}`,
+        name: thisUserObject.name,
+        userId: thisUserObject.uid,
         socketID: socket.id,
+        datetime: formattedDateTime,
       });
     }
     // clear chat text box
@@ -22,11 +42,12 @@ export default function ChatFooter({ socket }) {
   const handleTyping = (e) => {
     // dont emit for enter button
     if (e.key !== "Enter") {
-      socket.emit("typing", localStorage.getItem("userName"));
+      socket.emit("typing", user.uid);
     }
   };
+
   return (
-    <form onSubmit={handleSendMessage}>
+    <form onSubmit={(e) => handleSendMessage(e)}>
       <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
         <div></div>
         <div className="flex-grow ml-4">

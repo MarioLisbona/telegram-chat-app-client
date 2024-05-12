@@ -1,12 +1,15 @@
+// eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
 
-export default function UserButton({ user, socket }) {
+// eslint-disable-next-line no-unused-vars
+export default function UserButton({ userId, onlineUser, socket }) {
+  // eslint-disable-next-line no-unused-vars
   const [showTypingStatus, setShowTypingStatus] = useState(false);
 
   // useEffect to set timeout for rendering component when user is typing
   useEffect(() => {
     socket.on("typingResponse", (data) => {
-      if (data === user.userName) {
+      if (data === onlineUser.uid) {
         setShowTypingStatus(true);
         const timeoutId = setTimeout(() => {
           setShowTypingStatus(false);
@@ -18,10 +21,12 @@ export default function UserButton({ user, socket }) {
     return () => {
       socket.off("typingResponse");
     };
-  }, [socket, user.userName]);
+  }, [socket]);
 
-  const userInitial = user.userName.charAt(0).toUpperCase();
-  const chatUser = localStorage.getItem("userName") == user.userName;
+  // variable to grab User intiial
+  const userInitial = onlineUser.name.charAt(0).toUpperCase();
+  // used for conditional styling to highlight this user
+  const thisUser = onlineUser.uid === userId;
 
   return (
     <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
@@ -42,10 +47,10 @@ export default function UserButton({ user, socket }) {
         <div className="ml-2 text-sm">
           <div
             className={`${
-              chatUser ? "text-indigo-500 font-bold" : "font-semibold"
+              thisUser ? "text-indigo-500 font-bold" : "font-semibold"
             }`}
           >
-            {user.userName}
+            {onlineUser.name}
           </div>
         </div>
         {showTypingStatus && <div className="text-xs ml-2">typing</div>}

@@ -1,11 +1,13 @@
-import { handleLeaveChat } from "../../../../lib/chatUitls";
 import { useNavigate } from "react-router-dom";
+import { signOutUser, auth } from "../../../../lib/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function ChatName({ chatTitle }) {
+  const [user] = useAuthState(auth);
   const navigate = useNavigate();
   return (
     <div className="flex flex-row items-center justify-start h-12 w-full">
-      <button onClick={() => handleLeaveChat(navigate)}>
+      <button onClick={() => signOutUser(navigate)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -24,6 +26,9 @@ export default function ChatName({ chatTitle }) {
 
       <div className="ml-2 font-bold text-2xl">
         {chatTitle ? chatTitle : "Chat title"}
+      </div>
+      <div className="ml-2">
+        {user && (user.displayName ? user.displayName : "Anonymous")}
       </div>
     </div>
   );
