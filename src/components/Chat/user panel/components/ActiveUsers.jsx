@@ -1,5 +1,4 @@
 import UserButton from "./UserButton";
-// import { sortArrayByUsername } from "../../../../lib/chatUitls";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../../lib/firebase";
 import { useState, useEffect } from "react";
