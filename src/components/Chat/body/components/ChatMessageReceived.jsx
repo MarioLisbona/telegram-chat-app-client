@@ -1,9 +1,10 @@
+import { formatChatDateTime } from "../../../../lib/generalUtils";
 export default function ChatMessageReceived({ message }) {
   const text = message.text;
   const userName = message.name;
   const userInitial =
     message.name.charAt(0) == "(" ? "TG" : message.name.charAt(0).toUpperCase();
-  const timeSent = message.datetime;
+  const timeSent = formatChatDateTime(message.datetime);
 
   return (
     <div className="col-start-1 col-end-8 p-3 rounded-lg">
