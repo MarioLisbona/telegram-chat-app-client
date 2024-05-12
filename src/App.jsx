@@ -32,7 +32,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login socket={socket} />}></Route>
+        <Route path="/" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/chat" element={<ChatPage socket={socket} />}></Route>
       </Routes>
