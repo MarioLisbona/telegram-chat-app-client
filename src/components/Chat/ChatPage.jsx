@@ -32,6 +32,7 @@ export default function ChatPage({ socket }) {
     };
 
     // callbacks for telegram and client responses received on socket
+    // wait for socket to be iniitalised
     if (socket) {
       socket.on("messageResponse", handleMessageResponse);
       socket.on("telegramMessage", handleTelegramMessage);
@@ -42,6 +43,7 @@ export default function ChatPage({ socket }) {
         socket.off("telegramMessage", handleTelegramMessage);
       };
     } else {
+      // potentially render a loading window
       console.log("loading socket....");
     }
   }, [socket, messages]);
