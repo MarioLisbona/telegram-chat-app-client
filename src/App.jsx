@@ -35,8 +35,6 @@ export default function App() {
         <Route path="/" element={<Login socket={socket} />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/chat" element={<ChatPage socket={socket} />}></Route>
-        {/* <Route path="/" element={<Home socket={socket} />}></Route>
-        <Route path="/chat" element={<ChatPage socket={socket} />}></Route> */}
       </Routes>
     </BrowserRouter>
   );
