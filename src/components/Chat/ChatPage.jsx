@@ -32,14 +32,18 @@ export default function ChatPage({ socket }) {
     };
 
     // callbacks for telegram and client responses received on socket
-    socket.on("messageResponse", handleMessageResponse);
-    socket.on("telegramMessage", handleTelegramMessage);
+    if (socket) {
+      socket.on("messageResponse", handleMessageResponse);
+      socket.on("telegramMessage", handleTelegramMessage);
 
-    // Clean up event listeners when component unmounts
-    return () => {
-      socket.off("messageResponse", handleMessageResponse);
-      socket.off("telegramMessage", handleTelegramMessage);
-    };
+      // Clean up event listeners when component unmounts
+      return () => {
+        socket.off("messageResponse", handleMessageResponse);
+        socket.off("telegramMessage", handleTelegramMessage);
+      };
+    } else {
+      console.log("loading socket....");
+    }
   }, [socket, messages]);
 
   // scroll to bottom every time messages change
