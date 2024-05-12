@@ -16,19 +16,9 @@ export default function ChatPage({ socket }) {
 
     // Function to handle incoming Telegram messages
     const handleTelegramMessage = (data) => {
-      console.log("data inside handleTelegramMessage\n ", data);
-      // create new message object with telegram message data
-      const telegramMessage = {
-        chat: data.chat.title,
-        text: data.text,
-        name: `(telegram) ${data.from.first_name} ${data.from.last_name}`,
-        id: `${data.chat.id}-${data.chat.date}-${data.message_id}`,
-        socketID: "unknown",
-      };
-
-      // spread new telegram message object into messages array
-      setMessages([...messages, telegramMessage]);
-      setChatTitle(data.chat.title);
+      // spread new message object into messages array
+      setMessages([...messages, data]);
+      setChatTitle(data.title);
     };
 
     // callbacks for telegram and client responses received on socket
