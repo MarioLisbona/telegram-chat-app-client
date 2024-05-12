@@ -22,7 +22,10 @@ export default function UserButton({ userId, onlineUser, socket }) {
       socket.off("typingResponse");
     };
   }, [socket]);
+
+  // variable to grab User intiial
   const userInitial = onlineUser.name.charAt(0).toUpperCase();
+  // used for conditional styling to highlight this user
   const thisUser = onlineUser.uid === userId;
 
   return (
