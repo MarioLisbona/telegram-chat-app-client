@@ -29,7 +29,7 @@ export default function ChatFooter({ socket }) {
       socket.emit("message", {
         text: message,
         name: thisUserObject.name,
-        id: thisUserObject.uid,
+        userId: thisUserObject.uid,
         socketID: socket.id,
         datetime: formattedDateTime,
       });
