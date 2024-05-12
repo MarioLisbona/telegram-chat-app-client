@@ -13,7 +13,7 @@ export default function ChatFooter({ socket }) {
   // TODO: create function to return This user object
   useEffect(() => {
     getOnlineUsers(setOnlineUsers, user);
-  }, []);
+  }, [user]);
 
   // UserObject data for this user from firestore
   const thisUserObject = onlineUsers[0];
