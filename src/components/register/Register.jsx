@@ -8,6 +8,7 @@ export default function Register() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
+  // handle user registration
   const handleRegisterUser = () => {
     console.log("User registration", username, userEmail, userPassword);
     registerWithEmailAndPassword(username, userEmail, userPassword);
