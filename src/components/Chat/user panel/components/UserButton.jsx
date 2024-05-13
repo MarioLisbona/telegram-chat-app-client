@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { returnBgColor } from "../../../../lib/colorsUtils";
 
-export default function UserButton({ userId, onlineUser, socket }) {
+export default function UserButton({ onlineUser, socket }) {
   const [showTypingStatus, setShowTypingStatus] = useState(false);
 
   // useEffect to set timeout for rendering component when user is typing
@@ -23,8 +23,6 @@ export default function UserButton({ userId, onlineUser, socket }) {
 
   // variable to grab User intiial
   const userInitial = onlineUser.name.charAt(0).toUpperCase();
-  // used for conditional styling to highlight this user
-  const thisUser = onlineUser.uid === userId;
 
   const name = onlineUser.name;
   const bgColorName = returnBgColor(name);

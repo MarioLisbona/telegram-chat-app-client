@@ -7,6 +7,7 @@ import { getOnlineUsers } from "../../../../lib/firebase";
 export default function ActiveUser({ socket }) {
   const [user] = useAuthState(auth);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
@@ -30,12 +31,7 @@ export default function ActiveUser({ socket }) {
       <div className="flex flex-col space-y-1 mt-4 -mx-2 overflow-y-auto">
         {onlineUsers &&
           onlineUsers.map((onlineUser, idx) => (
-            <UserButton
-              userId={userId}
-              onlineUser={onlineUser}
-              key={idx}
-              socket={socket}
-            />
+            <UserButton onlineUser={onlineUser} key={idx} socket={socket} />
           ))}
       </div>
     </div>
