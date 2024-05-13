@@ -1,9 +1,7 @@
-// eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
+import { returnBgColor } from "../../../../lib/colorsUtils";
 
-// eslint-disable-next-line no-unused-vars
-export default function UserButton({ userId, onlineUser, socket }) {
-  // eslint-disable-next-line no-unused-vars
+export default function UserButton({ onlineUser, socket }) {
   const [showTypingStatus, setShowTypingStatus] = useState(false);
 
   // useEffect to set timeout for rendering component when user is typing
@@ -25,15 +23,14 @@ export default function UserButton({ userId, onlineUser, socket }) {
 
   // variable to grab User intiial
   const userInitial = onlineUser.name.charAt(0).toUpperCase();
-  // used for conditional styling to highlight this user
-  const thisUser = onlineUser.uid === userId;
+
+  const name = onlineUser.name;
+  const bgColorName = returnBgColor(name);
 
   return (
     <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
       <div
-        className={
-          "flex items-center justify-center h-8 w-8 bg-orange-200 rounded-full"
-        }
+        className={`flex items-center justify-center h-8 w-8 rounded-full ${bgColorName}`}
       >
         {showTypingStatus ? (
           <span className="relative flex h-6 w-6">
@@ -45,13 +42,7 @@ export default function UserButton({ userId, onlineUser, socket }) {
       </div>
       <div className="flex flex-col justify-center items-start">
         <div className="ml-2 text-sm">
-          <div
-            className={`${
-              thisUser ? "text-indigo-500 font-bold" : "font-semibold"
-            }`}
-          >
-            {onlineUser.name}
-          </div>
+          <div className={"font-semibold"}>{name}</div>
         </div>
         {showTypingStatus && <div className="text-xs ml-2">typing</div>}
       </div>
