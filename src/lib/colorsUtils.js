@@ -26,11 +26,11 @@ export const colors = {
   "bg-slate-500": "#64748B",
 };
 
-export const returnBgColor = (onlineUser) => {
+export const returnBgColor = (name) => {
   const nc = nearestColor.from(colors);
 
   // Create random hex string based on username and map to tailwindcss colors object
-  const bgColorHex = randomColor({ seed: onlineUser.name });
+  const bgColorHex = randomColor({ seed: name });
   const bgColorName = nc(bgColorHex).name;
 
   return bgColorName;
