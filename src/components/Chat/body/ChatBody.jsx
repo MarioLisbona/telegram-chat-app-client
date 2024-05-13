@@ -8,41 +8,8 @@ import { getOnlineUsers } from "../../../lib/firebase";
 
 export default function ChatBody({ messages, socket }) {
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const [userTyping, setUserTyping] = useState(false);
   const [user] = useAuthState(auth);
   const chatBodyRef = useRef(null);
-
-  useEffect(() => {
-    if (socket) {
-      socket.on("typingResponse", (data) => {
-        const user = onlineUsers.find((obj) => obj.uid === data);
-        if (user) {
-          setUserTyping(user);
-          console.log("userTyping-->", user.name);
-          const timeoutId = setTimeout(() => {
-            setUserTyping(false);
-          }, 2000);
-
-          return () => clearTimeout(timeoutId);
-        }
-      });
-    }
-
-    // Check if there's already a user typing upon component mount
-    const userAlreadyTyping = onlineUsers.some(
-      (user) => user.uid === userTyping?.uid
-    );
-    if (userAlreadyTyping) {
-      setUserTyping(true);
-    }
-
-    // Cleanup function
-    return () => {
-      if (socket) {
-        socket.off("typingResponse");
-      }
-    };
-  }, [socket, onlineUsers, userTyping]); // Add onlineUsers dependency to ensure it's re-evaluated when onlineUsers changes
 
   // This is working right now.
   // TODO: create function to return This user object
@@ -76,7 +43,6 @@ export default function ChatBody({ messages, socket }) {
                   <ChatMessageReceived message={message} key={idx} />
                 )
               )}
-              {userTyping ? `${userTyping.name} is typing` : ""}
             </div>
           </div>
         </div>
