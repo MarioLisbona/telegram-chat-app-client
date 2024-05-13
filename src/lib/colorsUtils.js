@@ -1,3 +1,6 @@
+import randomColor from "randomcolor";
+import nearestColor from "nearest-color";
+
 export const colors = {
   "bg-red-500": "#EF4444",
   "bg-orange-500": "#F97316",
@@ -21,4 +24,14 @@ export const colors = {
   "bg-zinc-500": "#71717A",
   "bg-gray-500": "#6B7280",
   "bg-slate-500": "#64748B",
+};
+
+export const returnBgColor = (onlineUser) => {
+  const nc = nearestColor.from(colors);
+
+  // Create random hex string based on username and map to tailwindcss colors object
+  const bgColorHex = randomColor({ seed: onlineUser.name });
+  const bgColorName = nc(bgColorHex).name;
+
+  return bgColorName;
 };
