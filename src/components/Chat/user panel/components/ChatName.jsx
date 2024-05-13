@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { signOutUser, auth } from "../../../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-export default function ChatName({ chatTitle }) {
+export default function ChatName() {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
   return (
@@ -24,9 +24,7 @@ export default function ChatName({ chatTitle }) {
         </svg>
       </button>
 
-      <div className="ml-2 font-bold text-2xl">
-        {chatTitle ? chatTitle : "Chat title"}
-      </div>
+      <div className="ml-2 font-bold text-2xl">{"Chat title"}</div>
       <div className="ml-2">
         {user && (user.displayName ? user.displayName : "Anonymous")}
       </div>
