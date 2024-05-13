@@ -13,7 +13,7 @@ export default function ChatName() {
       try {
         const response = await fetch("http://localhost:4000/get");
         const data = await response.json();
-        // Assuming data is an array with one object
+
         if (data.length > 0) {
           setChatTitle(data[0].title);
         }
@@ -25,10 +25,8 @@ export default function ChatName() {
     fetchData();
 
     // Clean-up function to handle unmounting or re-rendering
-    return () => {
-      // Any clean-up code here
-    };
-  }, []); // Empty dependency array means this effect runs once after the first render
+    return () => {};
+  }, []);
   return (
     <div className="flex flex-col items-start justify-center">
       <div className="flex flex-row items-center justify-start h-12 w-full">
