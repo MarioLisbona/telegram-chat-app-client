@@ -6,7 +6,7 @@ export default function ChatMessageReceived({ message }) {
   const userInitial =
     message.name.charAt(0) == "(" ? "TG" : message.name.charAt(0).toUpperCase();
   const timeSent = formatChatDateTime(message.datetime);
-  const bgColor = returnBgColor(userName);
+  const bgColorName = returnBgColor(userName);
 
   return (
     <div className="col-start-1 col-end-8 p-3 rounded-lg">
@@ -15,7 +15,7 @@ export default function ChatMessageReceived({ message }) {
         <div className="flex items-start justify-start">
           <div className="flex">
             <div
-              className={`flex-shrink-0 top-0 left-0 flex items-center justify-center h-10 w-10 rounded-full ${bgColor}`}
+              className={`flex-shrink-0 top-0 left-0 flex items-center justify-center h-10 w-10 rounded-full ${bgColorName}`}
             >
               {userInitial}
             </div>
