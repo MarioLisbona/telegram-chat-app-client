@@ -1,9 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
+import randomColor from "randomcolor";
+import nearestColor from "nearest-color";
+import { colors } from "../../../../lib/colors";
 
-// eslint-disable-next-line no-unused-vars
+const nc = nearestColor.from(colors);
+
 export default function UserButton({ userId, onlineUser, socket }) {
-  // eslint-disable-next-line no-unused-vars
   const [showTypingStatus, setShowTypingStatus] = useState(false);
 
   // useEffect to set timeout for rendering component when user is typing
@@ -28,12 +31,14 @@ export default function UserButton({ userId, onlineUser, socket }) {
   // used for conditional styling to highlight this user
   const thisUser = onlineUser.uid === userId;
 
+  // Create random hex string based on username and map to tailwindcss colors object
+  const bgColorHex = randomColor({ seed: onlineUser.name });
+  const bgColorName = nc(bgColorHex).name;
+
   return (
     <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
       <div
-        className={
-          "flex items-center justify-center h-8 w-8 bg-orange-200 rounded-full"
-        }
+        className={`flex items-center justify-center h-8 w-8 rounded-full ${bgColorName}`}
       >
         {showTypingStatus ? (
           <span className="relative flex h-6 w-6">
@@ -45,13 +50,7 @@ export default function UserButton({ userId, onlineUser, socket }) {
       </div>
       <div className="flex flex-col justify-center items-start">
         <div className="ml-2 text-sm">
-          <div
-            className={`${
-              thisUser ? "text-indigo-500 font-bold" : "font-semibold"
-            }`}
-          >
-            {onlineUser.name}
-          </div>
+          <div className={"font-semibold"}>{onlineUser.name}</div>
         </div>
         {showTypingStatus && <div className="text-xs ml-2">typing</div>}
       </div>
