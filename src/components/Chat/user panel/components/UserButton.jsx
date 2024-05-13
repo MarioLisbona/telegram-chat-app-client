@@ -26,7 +26,8 @@ export default function UserButton({ userId, onlineUser, socket }) {
   // used for conditional styling to highlight this user
   const thisUser = onlineUser.uid === userId;
 
-  const bgColorName = returnBgColor(onlineUser);
+  const name = onlineUser.name;
+  const bgColorName = returnBgColor(name);
 
   return (
     <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
@@ -43,7 +44,7 @@ export default function UserButton({ userId, onlineUser, socket }) {
       </div>
       <div className="flex flex-col justify-center items-start">
         <div className="ml-2 text-sm">
-          <div className={"font-semibold"}>{onlineUser.name}</div>
+          <div className={"font-semibold"}>{name}</div>
         </div>
         {showTypingStatus && <div className="text-xs ml-2">typing</div>}
       </div>
