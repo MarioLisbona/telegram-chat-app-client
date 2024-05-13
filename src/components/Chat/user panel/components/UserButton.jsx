@@ -1,10 +1,5 @@
-// eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
-import randomColor from "randomcolor";
-import nearestColor from "nearest-color";
-import { colors } from "../../../../lib/colorsUtils";
-
-const nc = nearestColor.from(colors);
+import { returnBgColor } from "../../../../lib/colorsUtils";
 
 export default function UserButton({ userId, onlineUser, socket }) {
   const [showTypingStatus, setShowTypingStatus] = useState(false);
@@ -31,9 +26,7 @@ export default function UserButton({ userId, onlineUser, socket }) {
   // used for conditional styling to highlight this user
   const thisUser = onlineUser.uid === userId;
 
-  // Create random hex string based on username and map to tailwindcss colors object
-  const bgColorHex = randomColor({ seed: onlineUser.name });
-  const bgColorName = nc(bgColorHex).name;
+  const bgColorName = returnBgColor(onlineUser);
 
   return (
     <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
