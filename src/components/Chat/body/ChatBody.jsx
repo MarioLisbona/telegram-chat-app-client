@@ -36,7 +36,6 @@ export default function ChatBody({ messages, socket }) {
         >
           <div className="flex flex-col h-full">
             <div className="grid grid-cols-12 gap-y-2">
-              {console.log("Messages:", messages)}
               {messages.map((message, idx) =>
                 message?.name === thisUserObject?.name ? (
                   <ChatMessageSent message={message} key={idx} />
