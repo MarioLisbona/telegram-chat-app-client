@@ -1,3 +1,4 @@
+import { returnBgColor } from "../../../../lib/colorsUtils";
 import { formatChatDateTime } from "../../../../lib/generalUtils";
 
 export default function ChatMessageSent({ message }) {
@@ -5,6 +6,7 @@ export default function ChatMessageSent({ message }) {
   const userName = message.name;
   const userInitial = message.name.charAt(0).toUpperCase();
   const timeSent = formatChatDateTime(message.datetime);
+  const bgColor = returnBgColor(userName);
 
   return (
     <div className="col-start-6 col-end-13 p-3 rounded-lg">
@@ -15,7 +17,9 @@ export default function ChatMessageSent({ message }) {
             <div className="relative mr-3 text-sm text-white font-medium bg-indigo-500 py-2 px-4 shadow rounded-xl rounded-tr-none max-w-1/2 flex-grow">
               <div>{text}</div>
             </div>
-            <div className="flex-shrink-0 top-0 right-0 flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500">
+            <div
+              className={`flex-shrink-0 top-0 right-0 flex items-center justify-center h-10 w-10 rounded-full ${bgColor}`}
+            >
               {userInitial}
             </div>
           </div>
