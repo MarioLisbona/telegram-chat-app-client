@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import randomColor from "randomcolor";
 import nearestColor from "nearest-color";
-import { colors } from "../../../../lib/colors";
+import { colors } from "../../../../lib/colorsUtils";
 
 const nc = nearestColor.from(colors);
 
