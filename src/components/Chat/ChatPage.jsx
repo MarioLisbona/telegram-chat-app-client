@@ -4,20 +4,30 @@ import ChatUserPanel from "./user panel/ChatUserPanel";
 
 export default function ChatPage({ socket }) {
   const [messages, setMessages] = useState([]);
-  const [chatTitle, setChatTitle] = useState("");
 
   useEffect(() => {
-    // Function to handle incoming messagesResponse from server
-    const handleMessageResponse = (data) => {
-      // spread new message object into messages array
-      setMessages([...messages, data]);
+    // Fetch messages when component mounts
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/messages");
+        if (!response.ok) {
+          throw new Error("Failed to fetch messages");
+        }
+        const data = await response.json();
+        setMessages(data); // Update messages state with response data
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
     };
 
-    // Function to handle incoming Telegram messages
+    fetchMessages(); // Call fetchMessages when component mounts
+
+    // Event listeners for socket messages
+    const handleMessageResponse = (data) => {
+      setMessages((prevMessages) => [...prevMessages, data]);
+    };
     const handleTelegramMessage = (data) => {
-      // spread new message object into messages array
-      setMessages([...messages, data]);
-      setChatTitle(data.title);
+      setMessages((prevMessages) => [...prevMessages, data]);
     };
 
     // callbacks for telegram and client responses received on socket
@@ -35,12 +45,12 @@ export default function ChatPage({ socket }) {
       // potentially render a loading window
       console.log("loading socket....");
     }
-  }, [socket, messages]);
+  }, [socket]);
 
   return (
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
-        <ChatUserPanel socket={socket} chatTitle={chatTitle} />
+        <ChatUserPanel socket={socket} />
         <ChatBody messages={messages} socket={socket} />
       </div>
     </div>
