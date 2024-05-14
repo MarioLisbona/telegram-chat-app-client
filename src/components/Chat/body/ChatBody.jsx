@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../lib/firebase";
 import { getOnlineUsers } from "../../../lib/firebase";
+import TypingBubble from "./components/TypingBubble";
 
 export default function ChatBody({ messages, socket }) {
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -37,7 +38,7 @@ export default function ChatBody({ messages, socket }) {
 
         const timeoutId = setTimeout(() => {
           setUserTyping(false);
-        }, 2000);
+        }, 4000);
 
         return () => clearTimeout(timeoutId); // Clear timeout for this specific event listener
       };
@@ -69,9 +70,10 @@ export default function ChatBody({ messages, socket }) {
                   )
                 )}
               </div>
+
               {userTyping && (
                 <div className="absolute bottom-0 left-0 bg-white p-2 inline-block">
-                  {`${userTyping.name} is typing`}
+                  <TypingBubble userTyping={userTyping} />
                 </div>
               )}
             </div>
