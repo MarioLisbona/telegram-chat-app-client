@@ -33,7 +33,6 @@ export default function ChatBody({ messages, socket }) {
     if (socket) {
       const handleTypingResponse = (data) => {
         const user = onlineUsers.find((obj) => obj.uid === data);
-        console.log("userTyping-->", user?.name);
         setUserTyping(user);
 
         const timeoutId = setTimeout(() => {
