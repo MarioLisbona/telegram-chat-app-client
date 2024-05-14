@@ -1,23 +1,17 @@
 import ChatFooter from "../footer/ChatFooter";
 import ChatMessageReceived from "./components/ChatMessageReceived";
 import ChatMessageSent from "./components/ChatMessageSent";
-import { useState, useEffect, useRef } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../lib/firebase";
-import { getOnlineUsers } from "../../../lib/firebase";
+import { useEffect, useRef } from "react";
+
 import TypingBubble from "./components/TypingBubble";
 
-export default function ChatBody({ messages, socket }) {
-  const [onlineUsers, setOnlineUsers] = useState([]);
-  const [userTyping, setUserTyping] = useState(false);
-  const [user] = useAuthState(auth);
+export default function ChatBody({
+  messages,
+  socket,
+  onlineUsers,
+  userTyping,
+}) {
   const chatBodyRef = useRef(null);
-
-  // This is working right now.
-  // TODO: create function to return This user object
-  useEffect(() => {
-    getOnlineUsers(setOnlineUsers, user);
-  }, [user]);
 
   // UserObject data for this user from firestore
   const thisUserObject = onlineUsers[0];
@@ -28,28 +22,6 @@ export default function ChatBody({ messages, socket }) {
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
   }, [messages]);
-
-  useEffect(() => {
-    if (socket) {
-      const handleTypingResponse = (data) => {
-        const user = onlineUsers.find((obj) => obj.uid === data);
-        setUserTyping(user);
-
-        const timeoutId = setTimeout(() => {
-          setUserTyping(false);
-        }, 2000);
-
-        return () => clearTimeout(timeoutId); // Clear timeout for this specific event listener
-      };
-
-      socket.on("typingResponse", handleTypingResponse);
-
-      // Cleanup function
-      return () => {
-        socket.off("typingResponse", handleTypingResponse);
-      };
-    }
-  }, [socket, onlineUsers]); // Removed userTyping from dependencies
 
   return (
     <div className="flex flex-col flex-auto h-full p-6">
