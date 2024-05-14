@@ -1,7 +1,7 @@
 import ChatFooter from "../footer/ChatFooter";
 import ChatMessageReceived from "./components/ChatMessageReceived";
 import ChatMessageSent from "./components/ChatMessageSent";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../lib/firebase";
 import { getOnlineUsers } from "../../../lib/firebase";
@@ -59,15 +59,21 @@ export default function ChatBody({ messages, socket }) {
           className="flex flex-col h-full overflow-x-auto mb-4"
         >
           <div className="flex flex-col h-full">
-            <div className="grid grid-cols-12 gap-y-2">
-              {messages.map((message, idx) =>
-                message?.name === thisUserObject?.name ? (
-                  <ChatMessageSent message={message} key={idx} />
-                ) : (
-                  <ChatMessageReceived message={message} key={idx} />
-                )
+            <div className="relative">
+              <div className="grid grid-cols-12 gap-y-2">
+                {messages.map((message, idx) =>
+                  message?.name === thisUserObject?.name ? (
+                    <ChatMessageSent message={message} key={idx} />
+                  ) : (
+                    <ChatMessageReceived message={message} key={idx} />
+                  )
+                )}
+              </div>
+              {userTyping && (
+                <div className="absolute bottom-0 left-0 bg-white p-2 inline-block">
+                  {`${userTyping.name} is typing`}
+                </div>
               )}
-              {userTyping ? `${userTyping.name} is typing` : ""}
             </div>
           </div>
         </div>
