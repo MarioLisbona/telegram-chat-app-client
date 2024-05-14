@@ -1,13 +1,14 @@
 import ChatFooter from "../footer/ChatFooter";
 import ChatMessageReceived from "./components/ChatMessageReceived";
 import ChatMessageSent from "./components/ChatMessageSent";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../lib/firebase";
 import { getOnlineUsers } from "../../../lib/firebase";
 
 export default function ChatBody({ messages, socket }) {
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [userTyping, setUserTyping] = useState(false);
   const [user] = useAuthState(auth);
   const chatBodyRef = useRef(null);
 
@@ -27,6 +28,29 @@ export default function ChatBody({ messages, socket }) {
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (socket) {
+      const handleTypingResponse = (data) => {
+        const user = onlineUsers.find((obj) => obj.uid === data);
+        console.log("userTyping-->", user?.name);
+        setUserTyping(user);
+
+        const timeoutId = setTimeout(() => {
+          setUserTyping(false);
+        }, 2000);
+
+        return () => clearTimeout(timeoutId); // Clear timeout for this specific event listener
+      };
+
+      socket.on("typingResponse", handleTypingResponse);
+
+      // Cleanup function
+      return () => {
+        socket.off("typingResponse", handleTypingResponse);
+      };
+    }
+  }, [socket, onlineUsers]); // Removed userTyping from dependencies
+
   return (
     <div className="flex flex-col flex-auto h-full p-6">
       <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
@@ -43,6 +67,7 @@ export default function ChatBody({ messages, socket }) {
                   <ChatMessageReceived message={message} key={idx} />
                 )
               )}
+              {userTyping ? `${userTyping.name} is typing` : ""}
             </div>
           </div>
         </div>
