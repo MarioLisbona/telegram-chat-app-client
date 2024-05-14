@@ -37,7 +37,7 @@ export default function ChatBody({ messages, socket }) {
 
         const timeoutId = setTimeout(() => {
           setUserTyping(false);
-        }, 4000);
+        }, 2000);
 
         return () => clearTimeout(timeoutId); // Clear timeout for this specific event listener
       };
