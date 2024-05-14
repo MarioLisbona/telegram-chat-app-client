@@ -4,6 +4,7 @@ import ChatUserPanel from "./user panel/ChatUserPanel";
 import { getOnlineUsers } from "../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
+import { fetchMessages } from "../../lib/chatUtils";
 
 export default function ChatPage({ socket }) {
   const [messages, setMessages] = useState([]);
@@ -16,21 +17,7 @@ export default function ChatPage({ socket }) {
   }, [user]);
 
   useEffect(() => {
-    // Fetch messages when component mounts
-    const fetchMessages = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/messages");
-        if (!response.ok) {
-          throw new Error("Failed to fetch messages");
-        }
-        const data = await response.json();
-        setMessages(data); // Update messages state with response data
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
-    };
-
-    fetchMessages(); // Call fetchMessages when component mounts
+    fetchMessages(setMessages); // Call fetchMessages when component mounts
 
     // Event listeners for socket messages
     const handleMessageResponse = (data) => {
