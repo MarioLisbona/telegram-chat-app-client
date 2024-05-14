@@ -72,7 +72,7 @@ export default function ChatBody({ messages, socket }) {
               </div>
 
               {userTyping && (
-                <div className="absolute bottom-0 left-0 bg-white p-2 inline-block">
+                <div className="absolute bottom-0 left-0 bg-slate-300 p-2 inline-block rounded-lg">
                   <TypingBubble userTyping={userTyping} />
                 </div>
               )}
