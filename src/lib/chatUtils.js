@@ -25,7 +25,6 @@ let typingTimeoutId;
 
 export const handleTypingResponse = (data, onlineUsers, setUserTyping) => {
   const user = onlineUsers.find((obj) => obj.uid === data);
-  console.log("Inside handleTypingResponse", user);
   setUserTyping(user);
 
   // Clear the previous timeout if it exists
