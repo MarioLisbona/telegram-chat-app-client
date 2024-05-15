@@ -21,17 +21,24 @@ export const handleTelegramMessage = (data, setMessages) => {
   setMessages((prevMessages) => [...prevMessages, data]);
 };
 
-// Handle typing response
+let typingTimeoutId;
+
 export const handleTypingResponse = (data, onlineUsers, setUserTyping) => {
   const user = onlineUsers.find((obj) => obj.uid === data);
   console.log("Inside handleTypingResponse", user);
   setUserTyping(user);
 
-  const timeoutId = setTimeout(() => {
+  // Clear the previous timeout if it exists
+  if (typingTimeoutId) {
+    clearTimeout(typingTimeoutId);
+  }
+
+  // Set a new timeout
+  typingTimeoutId = setTimeout(() => {
     setUserTyping(false);
   }, 2000);
 
-  return timeoutId;
+  return typingTimeoutId;
 };
 
 // Add socket event listeners
