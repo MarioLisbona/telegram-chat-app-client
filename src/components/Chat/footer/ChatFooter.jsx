@@ -41,7 +41,9 @@ export default function ChatFooter({ socket }) {
   // emit message when users is typing - used with onKeyDown in component
   const handleTyping = (e) => {
     // dont emit for enter button
-    if (e.key !== "Enter") {
+    if (e.key === "Enter") {
+      socket.emit("stoppedTyping", user.uid);
+    } else {
       socket.emit("typing", user.uid);
     }
   };
