@@ -11,12 +11,9 @@ export default function ChatName() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/get");
+        const response = await fetch("http://localhost:4000/chat");
         const data = await response.json();
-
-        if (data.length > 0) {
-          setChatTitle(data[0].title);
-        }
+        setChatTitle(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -47,9 +44,7 @@ export default function ChatName() {
           </svg>
         </button>
 
-        <div className="ml-2 font-bold text-2xl">
-          {chatTitle ? chatTitle : "Chat title"}
-        </div>
+        <div className="ml-2 font-bold text-2xl">{chatTitle && chatTitle}</div>
       </div>
       <div>{user && (user.displayName ? user.displayName : "Anonymous")}</div>
     </div>
