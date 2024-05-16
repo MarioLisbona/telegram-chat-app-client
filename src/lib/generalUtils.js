@@ -48,3 +48,13 @@ export const formatChatDateTime = (dateTimeString) => {
 
   return formattedDateTime;
 };
+
+export const fetchChatTitle = async (setChatTitle) => {
+  try {
+    const response = await fetch("http://localhost:4000/chat");
+    const data = await response.json();
+    setChatTitle(data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
