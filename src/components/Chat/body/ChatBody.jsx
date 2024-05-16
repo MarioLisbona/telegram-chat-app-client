@@ -1,21 +1,17 @@
 import ChatFooter from "../footer/ChatFooter";
 import ChatMessageReceived from "./components/ChatMessageReceived";
 import ChatMessageSent from "./components/ChatMessageSent";
-import { useState, useEffect, useRef } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../lib/firebase";
-import { getOnlineUsers } from "../../../lib/firebase";
+import { useEffect, useRef } from "react";
 
-export default function ChatBody({ messages, socket }) {
-  const [onlineUsers, setOnlineUsers] = useState([]);
-  const [user] = useAuthState(auth);
+import TypingBubble from "./components/TypingBubble";
+
+export default function ChatBody({
+  messages,
+  socket,
+  onlineUsers,
+  userTyping,
+}) {
   const chatBodyRef = useRef(null);
-
-  // This is working right now.
-  // TODO: create function to return This user object
-  useEffect(() => {
-    getOnlineUsers(setOnlineUsers, user);
-  }, [user]);
 
   // UserObject data for this user from firestore
   const thisUserObject = onlineUsers[0];
@@ -35,13 +31,21 @@ export default function ChatBody({ messages, socket }) {
           className="flex flex-col h-full overflow-x-auto mb-4"
         >
           <div className="flex flex-col h-full">
-            <div className="grid grid-cols-12 gap-y-2">
-              {messages.map((message, idx) =>
-                message?.name === thisUserObject?.name ? (
-                  <ChatMessageSent message={message} key={idx} />
-                ) : (
-                  <ChatMessageReceived message={message} key={idx} />
-                )
+            <div className="relative">
+              <div className="grid grid-cols-12 gap-y-2">
+                {messages.map((message, idx) =>
+                  message?.name === thisUserObject?.name ? (
+                    <ChatMessageSent message={message} key={idx} />
+                  ) : (
+                    <ChatMessageReceived message={message} key={idx} />
+                  )
+                )}
+              </div>
+
+              {userTyping && (
+                <div className="absolute bottom-0 left-0 bg-slate-300 p-2 inline-block rounded-lg">
+                  <TypingBubble userTyping={userTyping} />
+                </div>
               )}
             </div>
           </div>

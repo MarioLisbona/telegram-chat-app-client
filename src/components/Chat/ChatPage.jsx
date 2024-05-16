@@ -1,57 +1,52 @@
 import { useEffect, useState } from "react";
 import ChatBody from "./body/ChatBody";
 import ChatUserPanel from "./user panel/ChatUserPanel";
+import { getOnlineUsers } from "../../lib/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../lib/firebase";
+import { fetchMessages, addSocketListeners } from "../../lib/chatUtils";
 
 export default function ChatPage({ socket }) {
   const [messages, setMessages] = useState([]);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [userTyping, setUserTyping] = useState(false);
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
-    // Fetch messages when component mounts
-    const fetchMessages = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/messages");
-        if (!response.ok) {
-          throw new Error("Failed to fetch messages");
-        }
-        const data = await response.json();
-        setMessages(data); // Update messages state with response data
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
-    };
+    getOnlineUsers(setOnlineUsers, user);
+  }, [user]);
 
-    fetchMessages(); // Call fetchMessages when component mounts
+  useEffect(() => {
+    fetchMessages(setMessages); // Call fetchMessages when component mounts
 
-    // Event listeners for socket messages
-    const handleMessageResponse = (data) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
-    };
-    const handleTelegramMessage = (data) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
-    };
-
-    // callbacks for telegram and client responses received on socket
-    // wait for socket to be iniitalised
     if (socket) {
-      socket.on("messageResponse", handleMessageResponse);
-      socket.on("telegramMessage", handleTelegramMessage);
+      console.log("socket loaded");
+
+      const cleanupListeners = addSocketListeners(
+        socket,
+        setMessages,
+        onlineUsers,
+        setUserTyping
+      );
 
       // Clean up event listeners when component unmounts
-      return () => {
-        socket.off("messageResponse", handleMessageResponse);
-        socket.off("telegramMessage", handleTelegramMessage);
-      };
+      return cleanupListeners;
     } else {
       // potentially render a loading window
       console.log("loading socket....");
     }
-  }, [socket]);
+  }, [socket, onlineUsers, userTyping]);
 
   return (
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
         <ChatUserPanel socket={socket} />
-        <ChatBody messages={messages} socket={socket} />
+        <ChatBody
+          messages={messages}
+          socket={socket}
+          onlineUsers={onlineUsers}
+          userTyping={userTyping}
+        />
       </div>
     </div>
   );
