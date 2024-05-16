@@ -20,7 +20,7 @@ export default function ChatMessageReceived({ message }) {
               {userInitial}
             </div>
           </div>
-          <div className="relative ml-3 text-sm font-medium bg-white py-2 px-4 shadow rounded-xl rounded-tl-none flex-grow">
+          <div className="relative ml-3 text-sm font-medium bg-white py-2 px-4 shadow rounded-xl rounded-tl-none flex-grow whitespace-pre-wrap">
             <div>{text}</div>
           </div>
         </div>
