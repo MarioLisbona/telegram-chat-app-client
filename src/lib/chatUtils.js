@@ -36,7 +36,7 @@ export const handleTypingResponse = (data, onlineUsers, setUserTyping) => {
   // Set a new timeout
   typingTimeoutId = setTimeout(() => {
     setUserTyping(false);
-  }, 2000);
+  }, 750);
 
   return typingTimeoutId;
 };
