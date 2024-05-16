@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { signOutUser, auth } from "../../../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
+import { fetchChatTitle } from "../../../../lib/generalUtils";
 
 export default function ChatName() {
   const [user] = useAuthState(auth);
@@ -9,20 +10,7 @@ export default function ChatName() {
   const [chatTitle, setChatTitle] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/chat");
-        const data = await response.json();
-        setChatTitle(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-
-    // Clean-up function to handle unmounting or re-rendering
-    return () => {};
+    fetchChatTitle(setChatTitle);
   }, []);
   return (
     <div className="flex flex-col items-start justify-center">
