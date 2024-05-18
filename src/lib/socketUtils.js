@@ -1,6 +1,5 @@
 import { io } from "socket.io-client";
 
-// Function to initialize socket dynamically from the /api route
 export const initializeSocket = async () => {
   const url = import.meta.env.VITE_SERVER_URL || "http://localhost:4000";
   try {
@@ -10,30 +9,29 @@ export const initializeSocket = async () => {
 
     console.log("serverUrl--->", serverUrl);
 
-    // Check if the current protocol is HTTPS
+    // Determine WebSocket protocol based on the current protocol
     const socketProtocol =
-      window.location.protocol === "https:" ? "https:" : "http:";
-
+      window.location.protocol === "https:" ? "wss:" : "ws:";
     console.log("socketProtocol--->", socketProtocol);
 
-    // Update serverUrl based on the socketProtocol
-    if (socketProtocol === "https:") {
-      // If the protocol is HTTPS, update serverUrl to use HTTPS
-      if (serverUrl.startsWith("http://")) {
-        serverUrl = serverUrl.replace("http://", "https://");
-      }
-    } else {
-      // If the protocol is not HTTPS (i.e., HTTP), ensure serverUrl starts with HTTP
-      if (!serverUrl.startsWith("http://")) {
-        serverUrl = serverUrl.replace("https://", "http://");
-      }
-    }
+    // Extract hostname and port from serverUrl
+    const serverUrlObj = new URL(serverUrl);
+    const websocketUrl = `${socketProtocol}//${serverUrlObj.hostname}:${serverUrlObj.port}`;
 
-    console.log("serverUrl after protocol assesment--->", serverUrl);
+    console.log("websocketUrl--->", websocketUrl);
 
-    const socket = io(serverUrl, {
+    const socket = io(websocketUrl, {
       transports: ["websocket"],
     });
+
+    socket.on("connect", () => {
+      console.log("Socket connected:", socket.id);
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error("Connection Error:", error);
+    });
+
     return socket;
   } catch (error) {
     console.error("Error initializing socket:", error);
