@@ -15,7 +15,7 @@ export default function App() {
     const initialize = async () => {
       if (!socket) {
         const newSocket = await initializeSocket();
-        console.log("Creating new socket", newSocket);
+
         setSocket(newSocket);
       }
     };
@@ -30,6 +30,7 @@ export default function App() {
       }
     };
   }, [socket]); // Only run effect when 'socket' changes, ensuring it runs only once on mount
+
   return (
     <BrowserRouter>
       <Routes>

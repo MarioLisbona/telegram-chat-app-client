@@ -25,7 +25,7 @@ export const initializeSocket = async () => {
     });
 
     socket.on("connect", () => {
-      console.log("Socket connected:", socket.id);
+      console.log("Socket connected:", socket);
     });
 
     socket.on("connect_error", (error) => {
