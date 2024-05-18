@@ -15,6 +15,7 @@ export default function App() {
     const initialize = async () => {
       if (!socket) {
         const newSocket = await initializeSocket();
+        console.log("Creating new socket", newSocket);
         setSocket(newSocket);
       }
     };
