@@ -6,8 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     "/socket.io": {
-      target: "http://localhost:4000",
+      target: import.meta.env.VITE_SERVER_URL || "http://localhost:4000",
       ws: true,
+      changeOrigin: true,
     },
   },
 });
