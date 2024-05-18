@@ -6,7 +6,7 @@ export const initializeSocket = async () => {
   try {
     const response = await fetch(`${url}/api`);
     const data = await response.json();
-    const serverUrl = data.serverUrl;
+    let serverUrl = data.serverUrl;
 
     console.log("serverUrl--->", serverUrl);
 
@@ -16,12 +16,22 @@ export const initializeSocket = async () => {
 
     console.log("socketProtocol--->", socketProtocol);
 
-    // Construct the WebSocket URL
-    const socketUrl = serverUrl.replace(/^http/, socketProtocol.slice(0, -1));
+    // Update serverUrl based on the socketProtocol
+    if (socketProtocol === "https:") {
+      // If the protocol is HTTPS, update serverUrl to use HTTPS
+      if (serverUrl.startsWith("http://")) {
+        serverUrl = serverUrl.replace("http://", "https://");
+      }
+    } else {
+      // If the protocol is not HTTPS (i.e., HTTP), ensure serverUrl starts with HTTP
+      if (!serverUrl.startsWith("http://")) {
+        serverUrl = serverUrl.replace("https://", "http://");
+      }
+    }
 
-    console.log("socketUrl after replace--->", socketUrl);
+    console.log("serverUrl after protocol assesment--->", serverUrl);
 
-    const socket = io(socketUrl, {
+    const socket = io(serverUrl, {
       transports: ["websocket"],
     });
     return socket;
