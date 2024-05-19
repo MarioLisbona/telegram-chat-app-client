@@ -23,7 +23,7 @@ export default function ActiveUser({ socket }) {
   return (
     <div className="flex flex-col mt-8">
       <div className="flex flex-row items-center justify-between text-xs">
-        <span className="font-bold">Active Conversations</span>
+        <span className="font-bold">Active Users</span>
         <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">
           {onlineUsers.length}
         </span>
