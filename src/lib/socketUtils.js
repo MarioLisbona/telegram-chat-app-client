@@ -22,8 +22,6 @@ export const initializeSocket = async () => {
       ? `${socketProtocol}//${serverUrlObj.hostname}`
       : `${socketProtocol}//${serverUrlObj.hostname}:${serverUrlObj.port}`;
 
-    console.log("VITE_SERVER_URL", Boolean(import.meta.env.VITE_SERVER_URL));
-
     console.log("websocketUrl--->", websocketUrl);
 
     const socket = io(websocketUrl, {
