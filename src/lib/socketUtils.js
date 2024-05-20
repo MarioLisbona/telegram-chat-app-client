@@ -25,6 +25,8 @@ export const initializeSocket = async () => {
       path: "/socket.io", // Ensure the correct path is used
     });
 
+    console.log("printing socket object after creation", socket);
+
     socket.on("connect", () => {
       console.log("Socket connected:", socket);
     });
