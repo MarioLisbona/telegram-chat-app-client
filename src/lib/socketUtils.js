@@ -16,7 +16,13 @@ export const initializeSocket = async () => {
 
     // Extract hostname and port from serverUrl
     const serverUrlObj = new URL(serverUrl);
-    const websocketUrl = `${socketProtocol}//${serverUrlObj.hostname}:${serverUrlObj.port}`;
+
+    // conditionally omit port for websocketUrl - prod deployment
+    const websocketUrl = import.meta.env.VITE_SERVER_URL
+      ? `${socketProtocol}//${serverUrlObj.hostname}`
+      : `${socketProtocol}//${serverUrlObj.hostname}:${serverUrlObj.port}`;
+
+    console.log("VITE_SERVER_URL", Boolean(import.meta.env.VITE_SERVER_URL));
 
     console.log("websocketUrl--->", websocketUrl);
 
