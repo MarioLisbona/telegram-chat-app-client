@@ -35,7 +35,7 @@ export default function ChatPage({ socket }) {
       // potentially render a loading window
       console.log("loading socket....");
     }
-  }, [socket, onlineUsers, userTyping]);
+  }, [socket, onlineUsers]);
 
   return (
     <div className="flex h-screen antialiased text-gray-800">
