@@ -3,11 +3,7 @@ import { io } from "socket.io-client";
 export const initializeSocket = async () => {
   const url = import.meta.env.VITE_SERVER_URL || "http://localhost:4000";
   try {
-    const response = await fetch(`${url}/api`);
-    const data = await response.json();
-    let serverUrl = data.serverUrl;
-
-    console.log("serverUrl--->", serverUrl);
+    console.log("url--->", url);
 
     // Determine WebSocket protocol based on the current protocol
     const socketProtocol =
@@ -15,7 +11,7 @@ export const initializeSocket = async () => {
     console.log("socketProtocol--->", socketProtocol);
 
     // Extract hostname and port from serverUrl
-    const serverUrlObj = new URL(serverUrl);
+    const serverUrlObj = new URL(url);
 
     // conditionally omit port for websocketUrl - prod deployment
     const websocketUrl = import.meta.env.VITE_SERVER_URL
