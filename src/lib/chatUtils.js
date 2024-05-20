@@ -1,6 +1,8 @@
 export const fetchMessages = async (setMessages) => {
+  const url = import.meta.env.VITE_SERVER_URL || "http://localhost:4000";
+
   try {
-    const response = await fetch("http://localhost:4000/messages");
+    const response = await fetch(`${url}/messages`);
     if (!response.ok) {
       throw new Error("Failed to fetch messages");
     }
