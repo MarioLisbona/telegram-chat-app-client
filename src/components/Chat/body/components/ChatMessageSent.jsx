@@ -5,7 +5,7 @@ export default function ChatMessageSent({ message }) {
   const text = message.text;
   const userName = message.name;
   const userInitial = message.name.charAt(0).toUpperCase();
-  const timeSent = formatChatDateTime(message.datetime);
+  const timeSent = formatChatDateTime(message.createdAt);
   const bgColorName = returnBgColor(userName);
 
   return (
