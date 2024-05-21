@@ -1,11 +1,11 @@
 import { returnBgColor } from "../../../../lib/colorsUtils";
-import { formatChatDateTime } from "../../../../lib/generalUtils";
+import { formatChatCreatedAt } from "../../../../lib/generalUtils";
 export default function ChatMessageReceived({ message }) {
   const text = message.text;
   const userName = message.name;
   const userInitial =
     message.name.charAt(0) == "(" ? "TG" : message.name.charAt(0).toUpperCase();
-  const timeSent = formatChatDateTime(message.datetime);
+  const timeSent = formatChatCreatedAt(message.createdAt);
   const bgColorName = returnBgColor(userName);
 
   return (

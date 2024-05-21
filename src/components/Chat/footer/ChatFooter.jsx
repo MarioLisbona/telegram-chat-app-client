@@ -18,9 +18,9 @@ export default function ChatFooter({ socket }) {
   // UserObject data for this user from firestore
   const thisUserObject = onlineUsers[0];
 
-  // create now instnace and return formatted datetime
+  // create now instance and return formatted createdAt
   const now = new Date();
-  const formattedDateTime = formatDateTime(now);
+  const formattedCreatedAt = formatDateTime(now);
 
   // // send message to server on click event send button
   const handleSendMessage = (e) => {
@@ -31,7 +31,7 @@ export default function ChatFooter({ socket }) {
         name: thisUserObject.name,
         userId: thisUserObject.uid,
         socketID: socket.id,
-        datetime: formattedDateTime,
+        createdAt: formattedCreatedAt,
       });
     }
     // clear chat text box
