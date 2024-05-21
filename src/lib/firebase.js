@@ -109,14 +109,20 @@ const sendPasswordReset = async (email) => {
   }
 };
 
-function moveObjectWithUIDToStart(array, uid) {
-  const index = array.findIndex((item) => item.uid === uid);
-  if (index !== -1) {
-    const objToMove = array.splice(index, 1)[0]; // Remove the object from its current position
-    array.unshift(objToMove); // Move the object to the beginning of the array
+const moveObjectWithUIDToStart = (array, uid) => {
+  try {
+    const index = array.findIndex((item) => item.uid === uid);
+    if (index !== -1) {
+      const objToMove = array.splice(index, 1)[0]; // Remove the object from its current position
+      array.unshift(objToMove); // Move the object to the beginning of the array
+    }
+    return array;
+  } catch (error) {
+    console.error("Error in moveObjectWithUIDToStart:", error);
+    // Optionally handle the error or rethrow it
+    // throw error;
   }
-  return array;
-}
+};
 
 const getOnlineUsers = async (setOnlineUsers, user) => {
   if (!user) {
