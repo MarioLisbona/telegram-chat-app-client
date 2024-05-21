@@ -68,6 +68,6 @@ export const fetchChatTitle = async (setChatTitle) => {
     const data = await response.json();
     setChatTitle(data);
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error fetching Chat title:", error);
   }
 };
