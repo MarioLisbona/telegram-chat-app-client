@@ -13,7 +13,19 @@ export default function ChatPage({ socket }) {
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    getOnlineUsers(setOnlineUsers, user);
+    const fetchData = async () => {
+      try {
+        await getOnlineUsers(setOnlineUsers, user);
+      } catch (error) {
+        console.error("Error fetching online users:", error);
+        // Handle the error appropriately
+      }
+    };
+
+    // Only fetch data if user exists
+    if (user) {
+      fetchData();
+    }
   }, [user]);
 
   useEffect(() => {
