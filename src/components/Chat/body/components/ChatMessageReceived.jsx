@@ -5,7 +5,7 @@ export default function ChatMessageReceived({ message }) {
   const userName = message.name;
   const userInitial =
     message.name.charAt(0) == "(" ? "TG" : message.name.charAt(0).toUpperCase();
-  const timeSent = formatChatDateTime(message.datetime);
+  const timeSent = formatChatDateTime(message.createdAt);
   const bgColorName = returnBgColor(userName);
 
   return (
