@@ -50,22 +50,28 @@ export const addSocketListeners = (
   onlineUsers,
   setUserTyping
 ) => {
-  const handleMessageResponseWrapper = (data) =>
-    handleMessageResponse(data, setMessages);
-  const handleTelegramMessageWrapper = (data) =>
-    handleTelegramMessage(data, setMessages);
-  const handleTypingResponseWrapper = (data) => {
-    const timeoutId = handleTypingResponse(data, onlineUsers, setUserTyping);
-    return () => clearTimeout(timeoutId);
-  };
+  try {
+    const handleMessageResponseWrapper = (data) =>
+      handleMessageResponse(data, setMessages);
+    const handleTelegramMessageWrapper = (data) =>
+      handleTelegramMessage(data, setMessages);
+    const handleTypingResponseWrapper = (data) => {
+      const timeoutId = handleTypingResponse(data, onlineUsers, setUserTyping);
+      return () => clearTimeout(timeoutId);
+    };
 
-  socket.on("messageResponse", handleMessageResponseWrapper);
-  socket.on("telegramMessage", handleTelegramMessageWrapper);
-  socket.on("typingResponse", handleTypingResponseWrapper);
+    socket.on("messageResponse", handleMessageResponseWrapper);
+    socket.on("telegramMessage", handleTelegramMessageWrapper);
+    socket.on("typingResponse", handleTypingResponseWrapper);
 
-  return () => {
-    socket.off("messageResponse", handleMessageResponseWrapper);
-    socket.off("telegramMessage", handleTelegramMessageWrapper);
-    socket.off("typingResponse", handleTypingResponseWrapper);
-  };
+    return () => {
+      socket.off("messageResponse", handleMessageResponseWrapper);
+      socket.off("telegramMessage", handleTelegramMessageWrapper);
+      socket.off("typingResponse", handleTypingResponseWrapper);
+    };
+  } catch (error) {
+    console.error("Error setting up socket listeners:", error);
+    // Handle the error appropriately
+    return () => {};
+  }
 };
