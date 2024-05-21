@@ -124,18 +124,26 @@ const getOnlineUsers = async (setOnlineUsers, user) => {
     return;
   }
 
-  const q = query(collection(db, "users"), where("online", "==", true));
-  const unsubscribe = onSnapshot(q, (snapshot) => {
-    const updatedOnlineUsers = [];
-    snapshot.forEach((doc) => {
-      updatedOnlineUsers.push(doc.data());
+  try {
+    const q = query(collection(db, "users"), where("online", "==", true));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const updatedOnlineUsers = [];
+      snapshot.forEach((doc) => {
+        updatedOnlineUsers.push(doc.data());
+      });
+      // sort array with this user at position 1 at top of active users list
+      const sortedArray = moveObjectWithUIDToStart(
+        updatedOnlineUsers,
+        user.uid
+      );
+      // set state for onlineUsers
+      setOnlineUsers(sortedArray);
     });
-    // sort array with this user at position 1 at top of active users list
-    const sortedArray = moveObjectWithUIDToStart(updatedOnlineUsers, user.uid);
-    // set state for onlineUsers
-    setOnlineUsers(sortedArray);
-  });
-  return unsubscribe;
+    return unsubscribe;
+  } catch (error) {
+    console.error("Error fetching online users:", error);
+    // Handle the error appropriately
+  }
 };
 
 const signOutUser = async (navigate) => {
