@@ -27,11 +27,17 @@ export const colors = {
 };
 
 export const returnBgColor = (name) => {
-  const nc = nearestColor.from(colors);
+  try {
+    const nc = nearestColor.from(colors); // Assuming 'colors' is defined somewhere
 
-  // Create random hex string based on username and map to tailwindcss colors object
-  const bgColorHex = randomColor({ seed: name });
-  const bgColorName = nc(bgColorHex).name;
+    // Create random hex string based on username and map to tailwindcss colors object
+    const bgColorHex = randomColor({ seed: name });
+    const bgColorName = nc(bgColorHex).name;
 
-  return bgColorName;
+    return bgColorName;
+  } catch (error) {
+    console.error("Error in returnBgColor:", error);
+    // Handle the error appropriately, or rethrow it if needed
+    throw error;
+  }
 };
