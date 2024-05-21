@@ -21,7 +21,7 @@ export const formatDateTime = (now) => {
   }
 };
 
-export const formatChatDateTime = (dateTimeString) => {
+export const formatChatCreatedAt = (dateTimeString) => {
   try {
     const createdAt = new Date(dateTimeString);
     const now = new Date();
@@ -55,7 +55,7 @@ export const formatChatDateTime = (dateTimeString) => {
 
     return formattedDateTime;
   } catch (error) {
-    console.error("Error in formatChatDateTime:", error);
+    console.error("Error in formatChatCreatedAt:", error);
     // Handle the error appropriately, or rethrow it if needed
     throw error;
   }
