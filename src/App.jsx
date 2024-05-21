@@ -13,10 +13,14 @@ export default function App() {
   // useEffect to set socket state on initial component mount
   useEffect(() => {
     const initialize = async () => {
-      if (!socket) {
-        const newSocket = await initializeSocket();
+      try {
+        if (!socket) {
+          const newSocket = await initializeSocket();
 
-        setSocket(newSocket);
+          setSocket(newSocket);
+        }
+      } catch (error) {
+        console.error("Error initializing socket in useEffect:", error);
       }
     };
 
