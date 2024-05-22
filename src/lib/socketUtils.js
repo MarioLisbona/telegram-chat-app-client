@@ -18,7 +18,6 @@ export const initializeSocket = async () => {
     const socket = io(websocketUrl, {
       transports: ["websocket"],
       path: "/socket.io",
-      autoConnect: false,
     });
 
     socket.on("connect", () => {

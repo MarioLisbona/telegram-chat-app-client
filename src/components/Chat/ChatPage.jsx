@@ -13,12 +13,6 @@ export default function ChatPage({ socket }) {
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    // connect the socket on component mount - User has logged in successfully
-    socket.connect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     const fetchData = async () => {
       try {
         await getOnlineUsers(setOnlineUsers, user);
