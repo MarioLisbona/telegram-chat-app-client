@@ -12,6 +12,9 @@ export default defineConfig(({ mode }) => {
         ws: true,
         changeOrigin: true,
       },
+      optimizeDeps: {
+        include: ["react-fast-marquee"],
+      },
     },
   };
 });
