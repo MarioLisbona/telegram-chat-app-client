@@ -15,8 +15,6 @@ export const initializeSocket = async () => {
       ? `${socketProtocol}//${serverUrlObj.hostname}`
       : `${socketProtocol}//${serverUrlObj.hostname}:${serverUrlObj.port}`;
 
-    // console.log("websocketUrl--->", websocketUrl);
-
     const socket = io(websocketUrl, {
       transports: ["websocket"],
       path: "/socket.io",
