@@ -2,10 +2,8 @@ import TickerBar from "./TickerBar";
 
 export default function TickerContainer() {
   return (
-    <div className="m-4 p-2 bg-transparent ">
+    <div className="my-4 rounded-lg bg-gray-200">
       <TickerBar pauseOnHover={true} />
-      <TickerBar speed={30} />
-      <TickerBar speed={100} />
     </div>
   );
 }
