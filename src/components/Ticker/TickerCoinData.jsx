@@ -10,7 +10,7 @@ export default function TickerCoinData({ item }) {
   return (
     <div
       key={item.id}
-      className="relative overflow-hidden rounded-lg bg-gray-100 sm:px-6 sm:py-6 hover:bg-slate-200 cursor-pointer"
+      className="relative overflow-hidden rounded-lg bg-gray-100 sm:px-4  sm:py-6 hover:bg-slate-200 cursor-pointer"
     >
       <dt>
         <div className="absolute rounded-md bg-indigo-500 p-2">
@@ -21,11 +21,11 @@ export default function TickerCoinData({ item }) {
             alt={item.symbol}
           />
         </div>
-        <p className="ml-16 truncate text-sm font-medium text-gray-500">
+        <p className="ml-12 truncate text-sm font-medium text-gray-500">
           {item.name}
         </p>
       </dt>
-      <dd className="ml-16 flex items-baseline">
+      <dd className="ml-9 flex items-baseline">
         <p className="text-2xl font-semibold text-gray-900">{item.stat}</p>
         <p
           className={classNames(

@@ -4,7 +4,6 @@ import ChatMessageSent from "./components/ChatMessageSent";
 import { useEffect, useRef } from "react";
 
 import TypingBubble from "./components/TypingBubble";
-import TickerContainer from "../../Ticker/TickerContainer";
 
 export default function ChatBody({
   messages,
@@ -27,7 +26,6 @@ export default function ChatBody({
   return (
     <div className="flex flex-col flex-auto h-full p-6 ">
       <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4 ">
-        <TickerContainer />
         <div
           ref={chatBodyRef}
           className="flex flex-col h-full overflow-x-auto mb-4"
