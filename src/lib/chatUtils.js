@@ -75,3 +75,17 @@ export const addSocketListeners = (
     return () => {};
   }
 };
+
+export const fetchTickerData = async (setTickerData) => {
+  try {
+    const response = await fetch("http://localhost:4000/api/ticker");
+    if (!response.ok) {
+      throw new Error("Failed to fetch token data");
+    }
+    const data = await response.json();
+    console.log("data inside useeffect", data);
+    setTickerData(data);
+  } catch (error) {
+    console.error("Error fetching messages:", error);
+  }
+};
