@@ -12,16 +12,29 @@ export default function TickerContainer() {
 
   console.log("Ticker data", tickerData);
   return (
-    <MarqueeContainer>
-      {tickerData.map((coin, idx) => (
-        <div
-          key={idx}
-          onClick={() => console.log("Clicking this coin data", coin)}
-        >
-          <TickerCoinData item={coin} />
-        </div>
-      ))}
-    </MarqueeContainer>
+    <>
+      <MarqueeContainer>
+        {tickerData.map((coin, idx) => (
+          <div
+            key={idx}
+            onClick={() => console.log("Clicking this coin data", coin)}
+          >
+            <TickerCoinData item={coin} />
+          </div>
+        ))}
+      </MarqueeContainer>
+      <MarqueeContainer speed={130}>
+        {tickerData.map((coin, idx) => (
+          <div
+            key={idx}
+            onClick={() => console.log("Clicking this coin data", coin)}
+          >
+            {/* <TickerCoinData item={coin} /> */}
+            {coin.name}
+          </div>
+        ))}
+      </MarqueeContainer>
+    </>
     // </div>
   );
 }
