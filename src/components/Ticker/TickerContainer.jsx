@@ -12,12 +12,12 @@ export default function TickerContainer() {
     fetchTickerData(setTickerData);
 
     // // Set up interval to fetch data every 5 minutes (300,000 milliseconds)
-    // const interval = setInterval(() => {
-    //   fetchTickerData(setTickerData);
-    // }, 300000);
+    const interval = setInterval(() => {
+      fetchTickerData(setTickerData);
+    }, 5000);
 
-    // // Clear the interval when the component unmounts
-    // return () => clearInterval(interval);
+    // Clear the interval when the component unmounts
+    return () => clearInterval(interval);
   }, []);
 
   const toggleTickerVisibility = () => {
