@@ -77,8 +77,9 @@ export const addSocketListeners = (
 };
 
 export const fetchTickerData = async (setTickerData) => {
+  const url = import.meta.env.VITE_SERVER_URL || "http://localhost:4000";
   try {
-    const response = await fetch("http://localhost:4000/api/ticker");
+    const response = await fetch(`${url}/api/ticker`);
     if (!response.ok) {
       throw new Error("Failed to fetch token data");
     }
