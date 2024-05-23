@@ -4,7 +4,7 @@ export default function MarqueeContainer({ children, speed = 70 }) {
   return (
     <div className="w-full overflow-hidden bg-gray-100 ">
       <Marquee
-        play={false}
+        // play={false}
         pauseOnHover
         speed={speed}
         gradient
