@@ -10,6 +10,14 @@ export default function TickerContainer() {
 
   useEffect(() => {
     fetchTickerData(setTickerData);
+
+    // // Set up interval to fetch data every 5 minutes (300,000 milliseconds)
+    // const interval = setInterval(() => {
+    //   fetchTickerData(setTickerData);
+    // }, 300000);
+
+    // // Clear the interval when the component unmounts
+    // return () => clearInterval(interval);
   }, []);
 
   const toggleTickerVisibility = () => {
@@ -53,8 +61,7 @@ export default function TickerContainer() {
                 key={idx}
                 onClick={() => console.log("Clicking this coin data", coin)}
               >
-                {/* <TickerCoinData item={coin} /> */}
-                {coin.name}
+                {` ++ ${coin.name}: 24 hour volume data ++`}
               </div>
             ))}
           </MarqueeContainer>
