@@ -13,7 +13,7 @@ export default function TickerCoinData({ item }) {
       className="relative overflow-hidden rounded-lg bg-gray-100 sm:px-4  sm:py-6 hover:bg-slate-200 cursor-pointer"
     >
       <dt>
-        <div className="absolute rounded-md bg-indigo-500 p-2">
+        <div className="absolute rounded-md bg-indigo-400 p-2">
           <img
             className="h-6 w-6 text-white"
             aria-hidden="true"
