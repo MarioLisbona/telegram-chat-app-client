@@ -10,7 +10,7 @@ export default function TickerCoinData({ item }) {
   return (
     <div
       key={item.id}
-      className="relative overflow-hidden rounded-lg bg-gray-100 sm:px-4  sm:py-6 hover:bg-slate-200 cursor-pointer"
+      className="relative overflow-hidden rounded-lg bg-gray-100 px-4 py-4 hover:bg-slate-200 cursor-pointer"
     >
       <dt>
         <div className="absolute rounded-md bg-indigo-400 p-2">
