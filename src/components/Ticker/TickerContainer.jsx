@@ -12,6 +12,8 @@ export default function TickerContainer() {
     fetchTickerData(setTickerData);
 
     // // Set up interval to fetch data every 5 minutes (300,000 milliseconds)
+
+    // TODO: Put confitional on setInterval - only when isTickerVisible = true
     // const interval = setInterval(() => {
     //   fetchTickerData(setTickerData);
     // }, 300000);
