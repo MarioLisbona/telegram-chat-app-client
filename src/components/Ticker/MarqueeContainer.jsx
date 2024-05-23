@@ -7,7 +7,7 @@ export default function MarqueeContainer({ children, speed = 70 }) {
       speed={speed}
       gradient
       gradientColor={"#F3F4F6"}
-      gradientWidth={100}
+      gradientWidth={50}
     >
       {children}
     </Marquee>
