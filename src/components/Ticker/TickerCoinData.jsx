@@ -25,8 +25,10 @@ export default function TickerCoinData({ item }) {
           {item.name}
         </p>
       </dt>
-      <dd className="ml-9 flex items-baseline">
-        <p className="text-2xl font-semibold text-gray-900">{item.stat}</p>
+      <dd className="ml-12 flex items-baseline">
+        <p className="text-sm font-semibold text-gray-900">
+          {`$${item.current_price}`}
+        </p>
         <p
           className={classNames(
             increase ? "text-green-600" : "text-red-600",
