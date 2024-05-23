@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import MarqueeContainer from "./MarqueeContainer";
 import { fetchTickerData } from "../../lib/chatUtils";
 import TickerCoinData from "./TickerCoinData";
-import { PlusIcon } from "@heroicons/react/20/solid";
+import { PlusIcon, UserCircleIcon } from "@heroicons/react/20/solid";
 
 export default function TickerContainer() {
   const [tickerData, setTickerData] = useState([]);
@@ -29,7 +29,7 @@ export default function TickerContainer() {
   console.log("Ticker data", tickerData);
   return (
     <>
-      <div className="fixed bottom-8 left-8 z-50">
+      <div className="fixed bottom-12 left-8 z-50">
         {" "}
         {/* Position the button */}
         <button
@@ -46,7 +46,7 @@ export default function TickerContainer() {
         </button>
       </div>
       {isTickerVisible ? (
-        <>
+        <div className="flex flex-col mb-2">
           <MarqueeContainer>
             {tickerData.map((coin, idx) => (
               <div
@@ -63,11 +63,29 @@ export default function TickerContainer() {
                 key={idx}
                 onClick={() => console.log("Clicking this coin data", coin)}
               >
-                {` ++ ${coin.name}: 24 hour volume data ++`}
+                <div className="flex w-full items-center flex-none gap-x-2 p-2">
+                  <dt className="flex-none">
+                    <span className="sr-only ">Market Cap</span>
+                    <img
+                      className="h-6 w-6 text-white"
+                      aria-hidden="true"
+                      src={coin.image}
+                      alt={coin.symbol}
+                    />
+                  </dt>
+                  <div className="flex flex-col">
+                    <dd className="text-xs font-medium text-gray-500">
+                      Market Cap
+                    </dd>
+                    <dd className="text-xs font-semibold text-gray-900">
+                      {`$${coin.market_cap}`}
+                    </dd>
+                  </div>
+                </div>
               </div>
             ))}
           </MarqueeContainer>
-        </>
+        </div>
       ) : (
         ""
       )}
