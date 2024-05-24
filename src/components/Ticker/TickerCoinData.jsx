@@ -27,7 +27,7 @@ export default function TickerCoinData({ item }) {
       </dt>
       <dd className="ml-12 flex items-baseline">
         <p className="text-sm font-semibold text-gray-900">
-          {`$${item.current_price}`}
+          {`$${item.current_price.toFixed(2)}`}
         </p>
         <p
           className={classNames(
@@ -51,7 +51,7 @@ export default function TickerCoinData({ item }) {
             {" "}
             {increase ? "Increased" : "Decreased"} by{" "}
           </span>
-          {item.market_cap_change_percentage_24h}
+          {`%${item.market_cap_change_percentage_24h.toFixed(2)}`}
         </p>
       </dd>
     </div>
