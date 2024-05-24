@@ -15,11 +15,16 @@ export const fetchMessages = async (setMessages) => {
 
 // Handle incoming message response
 export const handleMessageResponse = (data, setMessages) => {
+  console.log("Logging data inside handleMessageResponse", data);
   setMessages((prevMessages) => [...prevMessages, data]);
 };
 
 // Handle incoming Telegram message
 export const handleTelegramMessage = (data, setMessages) => {
+  setMessages((prevMessages) => [...prevMessages, data]);
+};
+// Handle incoming tokenClick message
+export const handleTokenClickMessage = (data, setMessages) => {
   setMessages((prevMessages) => [...prevMessages, data]);
 };
 
@@ -55,6 +60,8 @@ export const addSocketListeners = (
       handleMessageResponse(data, setMessages);
     const handleTelegramMessageWrapper = (data) =>
       handleTelegramMessage(data, setMessages);
+    const handleTokenClickMessageWrapper = (data) =>
+      handleTelegramMessage(data, setMessages);
     const handleTypingResponseWrapper = (data) => {
       const timeoutId = handleTypingResponse(data, onlineUsers, setUserTyping);
       return () => clearTimeout(timeoutId);
@@ -62,11 +69,13 @@ export const addSocketListeners = (
 
     socket.on("messageResponse", handleMessageResponseWrapper);
     socket.on("telegramMessage", handleTelegramMessageWrapper);
+    socket.on("tokenClickResponse", handleTokenClickMessageWrapper);
     socket.on("typingResponse", handleTypingResponseWrapper);
 
     return () => {
       socket.off("messageResponse", handleMessageResponseWrapper);
       socket.off("telegramMessage", handleTelegramMessageWrapper);
+      socket.off("tokenClickResponse", handleTokenClickMessageWrapper);
       socket.off("typingResponse", handleTypingResponseWrapper);
     };
   } catch (error) {
