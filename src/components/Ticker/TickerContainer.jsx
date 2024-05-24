@@ -7,6 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
 import { getOnlineUsers } from "../../lib/firebase";
 import { formatDateTime } from "../../lib/generalUtils";
+import { handleTokenClick } from "../../lib/chatUtils";
 
 export default function TickerContainer({ socket }) {
   const [tickerData, setTickerData] = useState([]);
@@ -19,7 +20,7 @@ export default function TickerContainer({ socket }) {
 
     // // Set up interval to fetch data every 5 minutes (300,000 milliseconds)
 
-    // TODO: Put confitional on setInterval - only when isTickerVisible = true
+    // TODO: Put conditional on setInterval - only when isTickerVisible = true
     // const interval = setInterval(() => {
     //   fetchTickerData(setTickerData);
     // }, 300000);
@@ -32,27 +33,9 @@ export default function TickerContainer({ socket }) {
     getOnlineUsers(setOnlineUsers, user);
   }, [user]);
 
+  // toggle the visibility of the ticker
   const toggleTickerVisibility = () => {
     setIsTickerVisible(!isTickerVisible);
-  };
-
-  const handleTokenClick = (coin, onlineUsers) => {
-    // UserObject data for this user from firestore
-    const thisUserObject = onlineUsers[0];
-
-    // create now instance and return formatted createdAt
-    const now = new Date();
-    const formattedCreatedAt = formatDateTime(now);
-
-    const data = {
-      text: `${thisUserObject.name} said check this out!\n`,
-      coin: coin,
-      name: thisUserObject.name,
-      userId: thisUserObject.uid,
-      socketID: socket.id,
-      createdAt: formattedCreatedAt,
-    };
-    socket.emit("tokenClick", data);
   };
 
   return (
@@ -79,7 +62,9 @@ export default function TickerContainer({ socket }) {
             {tickerData.map((coin, idx) => (
               <div
                 key={idx}
-                onClick={() => handleTokenClick(coin, onlineUsers)}
+                onClick={() =>
+                  handleTokenClick(coin, onlineUsers, formatDateTime, socket)
+                }
               >
                 <TickerCoinData item={coin} />
               </div>

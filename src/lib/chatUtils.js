@@ -98,3 +98,22 @@ export const fetchTickerData = async (setTickerData) => {
     console.error("Error fetching messages:", error);
   }
 };
+
+export const handleTokenClick = (coin, onlineUsers, formatDateTime, socket) => {
+  // UserObject data for this user from firestore
+  const thisUserObject = onlineUsers[0];
+
+  // create now instance and return formatted createdAt
+  const now = new Date();
+  const formattedCreatedAt = formatDateTime(now);
+
+  const data = {
+    text: `${thisUserObject.name} said check this out!\n`,
+    coin: coin,
+    name: thisUserObject.name,
+    userId: thisUserObject.uid,
+    socketID: socket.id,
+    createdAt: formattedCreatedAt,
+  };
+  socket.emit("tokenClick", data);
+};
