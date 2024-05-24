@@ -22,6 +22,10 @@ export const handleMessageResponse = (data, setMessages) => {
 export const handleTelegramMessage = (data, setMessages) => {
   setMessages((prevMessages) => [...prevMessages, data]);
 };
+// Handle incoming tokenClick message
+export const handleTokenClickMessage = (data, setMessages) => {
+  setMessages((prevMessages) => [...prevMessages, data]);
+};
 
 let typingTimeoutId;
 
@@ -55,6 +59,8 @@ export const addSocketListeners = (
       handleMessageResponse(data, setMessages);
     const handleTelegramMessageWrapper = (data) =>
       handleTelegramMessage(data, setMessages);
+    const handleTokenClickMessageWrapper = (data) =>
+      handleTelegramMessage(data, setMessages);
     const handleTypingResponseWrapper = (data) => {
       const timeoutId = handleTypingResponse(data, onlineUsers, setUserTyping);
       return () => clearTimeout(timeoutId);
@@ -62,11 +68,13 @@ export const addSocketListeners = (
 
     socket.on("messageResponse", handleMessageResponseWrapper);
     socket.on("telegramMessage", handleTelegramMessageWrapper);
+    socket.on("tokenClickResponse", handleTokenClickMessageWrapper);
     socket.on("typingResponse", handleTypingResponseWrapper);
 
     return () => {
       socket.off("messageResponse", handleMessageResponseWrapper);
       socket.off("telegramMessage", handleTelegramMessageWrapper);
+      socket.off("tokenClickResponse", handleTokenClickMessageWrapper);
       socket.off("typingResponse", handleTypingResponseWrapper);
     };
   } catch (error) {
@@ -74,4 +82,38 @@ export const addSocketListeners = (
     // Handle the error appropriately
     return () => {};
   }
+};
+
+export const fetchTickerData = async (setTickerData) => {
+  const url = import.meta.env.VITE_SERVER_URL || "http://localhost:4000";
+  try {
+    const response = await fetch(`${url}/api/ticker`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch token data");
+    }
+    const data = await response.json();
+
+    setTickerData(data);
+  } catch (error) {
+    console.error("Error fetching messages:", error);
+  }
+};
+
+export const handleTokenClick = (coin, onlineUsers, formatDateTime, socket) => {
+  // UserObject data for this user from firestore
+  const thisUserObject = onlineUsers[0];
+
+  // create now instance and return formatted createdAt
+  const now = new Date();
+  const formattedCreatedAt = formatDateTime(now);
+
+  const data = {
+    text: `${thisUserObject.name} said check this out!\n`,
+    coin: coin,
+    name: thisUserObject.name,
+    userId: thisUserObject.uid,
+    socketID: socket.id,
+    createdAt: formattedCreatedAt,
+  };
+  socket.emit("tokenClick", data);
 };

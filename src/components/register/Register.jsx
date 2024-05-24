@@ -10,7 +10,6 @@ export default function Register() {
 
   // handle user registration
   const handleRegisterUser = () => {
-    console.log("User registration", username, userEmail, userPassword);
     registerWithEmailAndPassword(username, userEmail, userPassword);
     alert(`Created user account for ${username}`);
     navigate("/");

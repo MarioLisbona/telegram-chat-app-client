@@ -5,6 +5,7 @@ import { getOnlineUsers } from "../../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
 import { fetchMessages, addSocketListeners } from "../../lib/chatUtils";
+import TickerContainer from "../Ticker/TickerContainer";
 
 export default function ChatPage({ socket }) {
   const [messages, setMessages] = useState([]);
@@ -32,8 +33,6 @@ export default function ChatPage({ socket }) {
     fetchMessages(setMessages); // Call fetchMessages when component mounts
 
     if (socket) {
-      console.log("addSocketListeners in ChatPage component");
-
       const cleanupListeners = addSocketListeners(
         socket,
         setMessages,
@@ -45,12 +44,11 @@ export default function ChatPage({ socket }) {
       return cleanupListeners;
     } else {
       // potentially render a loading window
-      console.log("loading socket....");
     }
   }, [socket, onlineUsers]);
 
   return (
-    <div className="flex h-screen antialiased text-gray-800">
+    <div className="flex flex-col h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
         <ChatUserPanel socket={socket} />
         <ChatBody
@@ -60,6 +58,7 @@ export default function ChatPage({ socket }) {
           userTyping={userTyping}
         />
       </div>
+      <TickerContainer socket={socket} />
     </div>
   );
 }

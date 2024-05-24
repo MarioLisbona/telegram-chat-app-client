@@ -14,7 +14,7 @@ export default function ChatMessageSent({ message }) {
         <div className="text-xs mb-1">{userName}</div>
         <div className="flex items-start justify-end">
           <div className="flex row-reverse">
-            <div className="relative mr-3 text-sm text-white font-medium bg-indigo-500 py-2 px-4 shadow rounded-xl rounded-tr-none max-w-1/2 flex-grow">
+            <div className="relative mr-3 text-sm text-white font-medium bg-indigo-500 py-2 px-4 shadow rounded-xl rounded-tr-none max-w-1/2 flex-grow whitespace-pre-wrap">
               <div>{text}</div>
             </div>
             <div
