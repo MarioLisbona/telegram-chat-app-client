@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import MarqueeContainer from "./MarqueeContainer";
 import { fetchTickerData } from "../../lib/chatUtils";
 import TickerCoinData from "./TickerCoinData";
-import { PlusIcon, UserCircleIcon } from "@heroicons/react/20/solid";
+import { PlusIcon } from "@heroicons/react/20/solid";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
 import { getOnlineUsers } from "../../lib/firebase";
