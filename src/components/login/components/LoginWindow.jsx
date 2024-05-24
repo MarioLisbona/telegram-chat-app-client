@@ -27,7 +27,6 @@ export default function LoginWindow() {
                 </label>
                 <div className="mt-2">
                   <input
-                    onChange={(e) => console.log(e.target.value)}
                     id="email"
                     name="email"
                     type="email"

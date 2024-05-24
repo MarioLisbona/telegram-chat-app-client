@@ -92,7 +92,7 @@ export const fetchTickerData = async (setTickerData) => {
       throw new Error("Failed to fetch token data");
     }
     const data = await response.json();
-    console.log("data inside useeffect", data);
+
     setTickerData(data);
   } catch (error) {
     console.error("Error fetching messages:", error);

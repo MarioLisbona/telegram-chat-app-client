@@ -87,10 +87,7 @@ export default function TickerContainer({ socket }) {
           </MarqueeContainer>
           <MarqueeContainer speed={130}>
             {tickerData.map((coin, idx) => (
-              <div
-                key={idx}
-                onClick={() => console.log("Clicking this coin data", coin)}
-              >
+              <div key={idx}>
                 <div className="flex w-full items-center flex-none gap-x-2 p-2">
                   <dt className="flex-none">
                     <span className="sr-only ">Market Cap</span>

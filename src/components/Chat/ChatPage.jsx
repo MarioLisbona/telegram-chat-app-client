@@ -33,8 +33,6 @@ export default function ChatPage({ socket }) {
     fetchMessages(setMessages); // Call fetchMessages when component mounts
 
     if (socket) {
-      console.log("addSocketListeners in ChatPage component");
-
       const cleanupListeners = addSocketListeners(
         socket,
         setMessages,
@@ -46,7 +44,6 @@ export default function ChatPage({ socket }) {
       return cleanupListeners;
     } else {
       // potentially render a loading window
-      console.log("loading socket....");
     }
   }, [socket, onlineUsers]);
 
