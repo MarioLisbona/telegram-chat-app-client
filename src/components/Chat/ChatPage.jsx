@@ -61,7 +61,7 @@ export default function ChatPage({ socket }) {
           userTyping={userTyping}
         />
       </div>
-      <TickerContainer />
+      <TickerContainer socket={socket} />
     </div>
   );
 }
