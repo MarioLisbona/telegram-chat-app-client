@@ -15,7 +15,6 @@ export const fetchMessages = async (setMessages) => {
 
 // Handle incoming message response
 export const handleMessageResponse = (data, setMessages) => {
-  console.log("Logging data inside handleMessageResponse", data);
   setMessages((prevMessages) => [...prevMessages, data]);
 };
 
