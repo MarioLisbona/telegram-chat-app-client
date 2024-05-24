@@ -3,10 +3,16 @@ import MarqueeContainer from "./MarqueeContainer";
 import { fetchTickerData } from "../../lib/chatUtils";
 import TickerCoinData from "./TickerCoinData";
 import { PlusIcon, UserCircleIcon } from "@heroicons/react/20/solid";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../lib/firebase";
+import { getOnlineUsers } from "../../lib/firebase";
+import { formatDateTime } from "../../lib/generalUtils";
 
-export default function TickerContainer() {
+export default function TickerContainer({ socket }) {
   const [tickerData, setTickerData] = useState([]);
   const [isTickerVisible, setIsTickerVisible] = useState(true);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     fetchTickerData(setTickerData);
@@ -22,11 +28,33 @@ export default function TickerContainer() {
     // return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    getOnlineUsers(setOnlineUsers, user);
+  }, [user]);
+
   const toggleTickerVisibility = () => {
     setIsTickerVisible(!isTickerVisible);
   };
 
-  console.log("Ticker data", tickerData);
+  const handleTokenClick = (coin, onlineUsers) => {
+    // UserObject data for this user from firestore
+    const thisUserObject = onlineUsers[0];
+
+    // create now instance and return formatted createdAt
+    const now = new Date();
+    const formattedCreatedAt = formatDateTime(now);
+
+    const data = {
+      text: `${thisUserObject.name} said check this out!\n`,
+      coin: coin,
+      name: thisUserObject.name,
+      userId: thisUserObject.uid,
+      socketID: socket.id,
+      createdAt: formattedCreatedAt,
+    };
+    socket.emit("tokenClick", data);
+  };
+
   return (
     <>
       <div className="fixed bottom-12 left-8 z-50">
@@ -51,7 +79,7 @@ export default function TickerContainer() {
             {tickerData.map((coin, idx) => (
               <div
                 key={idx}
-                onClick={() => console.log("Clicking this coin data", coin)}
+                onClick={() => handleTokenClick(coin, onlineUsers)}
               >
                 <TickerCoinData item={coin} />
               </div>
