@@ -2,6 +2,7 @@ import { io } from "socket.io-client";
 
 export const initializeSocket = async () => {
   const url = import.meta.env.VITE_SERVER_URL || "http://localhost:4000";
+  console.log("Logging url in initializeSocket", url);
   try {
     // Determine WebSocket protocol based on the current protocol
     const socketProtocol =
