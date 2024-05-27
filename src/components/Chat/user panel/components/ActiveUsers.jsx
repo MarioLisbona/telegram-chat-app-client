@@ -22,11 +22,11 @@ export default function ActiveUser({ socket }) {
 
   return (
     <div className="flex flex-col mt-8">
-      <div className="flex flex-row items-center justify-between text-xs">
-        <span className="font-bold">Active Users</span>
-        <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">
+      <div className="flex flex-row items-center justify-start text-xs mx-1">
+        <span className="flex items-center justify-center bg-gray-300 h-6 w-6 rounded-full ">
           {onlineUsers.length}
         </span>
+        <span className="font-bold mx-2">Active Users</span>
       </div>
       <div className="flex flex-col space-y-1 mt-4 -mx-2 overflow-y-auto">
         {onlineUsers &&
