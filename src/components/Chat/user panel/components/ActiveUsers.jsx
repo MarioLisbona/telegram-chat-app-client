@@ -9,6 +9,11 @@ export default function ActiveUser({ socket }) {
   const [onlineUsers, setOnlineUsers] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [userId, setUserId] = useState("");
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
 
   useEffect(() => {
     getOnlineUsers(setOnlineUsers, user);
@@ -21,15 +26,8 @@ export default function ActiveUser({ socket }) {
   }, [user]); // Update when user changes
 
   return (
-    // <div className="flex flex-col mt-8">
-    //   <div className="flex flex-row items-center justify-start text-xs mx-1">
-    //     <span className="flex items-center justify-center bg-gray-300 h-6 w-6 rounded-full ">
-    //       {onlineUsers.length}
-    //     </span>
-    //     <span className="font-bold mx-2">Active Users</span>
-    //   </div>
     <div className="flex flex-col space-y-1 mt-4 overflow-y-auto">
-      <button className="flex flex-row items-center bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 shadow rounded-2xl me-2">
+      <button className="flex flex-row items-center justify-between bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 shadow rounded-2xl me-2">
         <div
           className={`flex items-center justify-center h-8 w-8 rounded-full bg-indigo-500`}
         >
@@ -37,14 +35,50 @@ export default function ActiveUser({ socket }) {
         </div>
         <div className="flex flex-col justify-center items-start">
           <div className="ml-2 text-sm">
-            <div className="font-semibold">{"Active users"}</div>
+            <div className="font-semibold">
+              {isCollapsed ? "Show users" : "Hide users"}
+            </div>
           </div>
         </div>
+        {isCollapsed ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+            onClick={toggleCollapse}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m19.5 8.25-7.5 7.5-7.5-7.5"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+            onClick={toggleCollapse}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m4.5 15.75 7.5-7.5 7.5 7.5"
+            />
+          </svg>
+        )}
       </button>
-      {onlineUsers &&
-        onlineUsers.map((onlineUser, idx) => (
-          <UserButton onlineUser={onlineUser} key={idx} socket={socket} />
-        ))}
+      {onlineUsers && !isCollapsed
+        ? onlineUsers.map((onlineUser, idx) => (
+            <UserButton onlineUser={onlineUser} key={idx} socket={socket} />
+          ))
+        : ""}
     </div>
     // </div>
   );
