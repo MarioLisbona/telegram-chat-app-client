@@ -16,7 +16,7 @@ export default function UserButton({ onlineUser }) {
       </div>
       <div className="flex flex-col justify-center items-start">
         <div className="ml-2 text-sm">
-          <div className={"font-semibold"}>{name}</div>
+          <div className="font-semibold">{name}</div>
         </div>
       </div>
     </button>
