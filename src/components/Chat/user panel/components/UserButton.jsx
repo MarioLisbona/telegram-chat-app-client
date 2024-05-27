@@ -8,7 +8,7 @@ export default function UserButton({ onlineUser }) {
   const bgColorName = returnBgColor(name);
 
   return (
-    <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
+    <button className="flex flex-row items-center hover:bg-gray-100 rounded-2xl px-4 py-2">
       <div
         className={`flex items-center justify-center h-8 w-8 rounded-full ${bgColorName}`}
       >
