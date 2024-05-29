@@ -2,7 +2,6 @@ import { formatChatCreatedAt } from "../../../../lib/generalUtils";
 export default function UserJoinLeave({ message }) {
   const text = message.text;
   const left = text.includes("left");
-  const userName = message.name;
   const timeSent = formatChatCreatedAt(message.createdAt);
   return (
     <div className="col-start-6 col-end-13 p-3 rounded-lg">
