@@ -7,7 +7,6 @@ export default function UserJoinLeave({ message }) {
   return (
     <div className="col-start-6 col-end-13 p-3 rounded-lg">
       <div className="flex flex-col items-start">
-        {/* <div className="text-xs mb-1">{userName}</div> */}
         <div className="flex items-start justify-end">
           <div className="flex row-reverse justify-center items-center">
             <div
@@ -19,7 +18,6 @@ export default function UserJoinLeave({ message }) {
             </div>
           </div>
         </div>
-        {/* <div className="text-xs mt-1">{timeSent}</div> */}
       </div>
     </div>
   );
