@@ -4,6 +4,7 @@ import ChatMessageSent from "./components/ChatMessageSent";
 import { useEffect, useRef } from "react";
 
 import TypingBubble from "./components/TypingBubble";
+import UserJoinLeave from "./components/UserJoinLeave";
 
 export default function ChatBody({
   messages,
@@ -33,16 +34,9 @@ export default function ChatBody({
           <div className="flex flex-col h-full">
             <div className="relative">
               <div className="grid grid-cols-12 gap-y-2">
-                {/* {messages.map((message, idx) =>
-                  message?.name === thisUserObject?.name ? (
-                    <ChatMessageSent message={message} key={idx} />
-                  ) : (
-                    <ChatMessageReceived message={message} key={idx} />
-                  )
-                )} */}
                 {messages.map((message, idx) => {
                   if (message?.name === "telegram-chat-server") {
-                    return `Message ${message.text}`;
+                    return <UserJoinLeave message={message} key={idx} />;
                   } else if (message?.name === thisUserObject?.name) {
                     return <ChatMessageSent message={message} key={idx} />;
                   } else {
