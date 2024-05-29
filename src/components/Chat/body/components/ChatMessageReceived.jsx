@@ -1,10 +1,13 @@
 import { returnBgColor } from "../../../../lib/colorsUtils";
 import { formatChatCreatedAt } from "../../../../lib/generalUtils";
+
 export default function ChatMessageReceived({ message }) {
   const text = message.text;
   const userName = message.name;
   const userInitial =
-    message.name.charAt(0) == "(" ? "TG" : message.name.charAt(0).toUpperCase();
+    message.name.charAt(0) === "("
+      ? "TG"
+      : message.name.charAt(0).toUpperCase();
   const timeSent = formatChatCreatedAt(message.createdAt);
   const bgColorName = returnBgColor(userName);
 
@@ -20,7 +23,7 @@ export default function ChatMessageReceived({ message }) {
               {userInitial}
             </div>
           </div>
-          <div className="relative ml-3 text-sm font-medium bg-white py-2 px-4 shadow rounded-xl rounded-tl-none flex-grow whitespace-pre-wrap">
+          <div className="relative ml-3 text-sm font-medium bg-white py-2 px-4 shadow rounded-xl rounded-tl-none max-w-1/2 break-words break-all whitespace-pre-wrap">
             <div>{text}</div>
           </div>
         </div>
