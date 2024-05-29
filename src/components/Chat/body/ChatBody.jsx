@@ -13,6 +13,22 @@ export default function ChatBody({
   onlineUsers,
   userTyping,
 }) {
+  console.log("Last msg sent in ChatBody", messages[messages.length - 2]);
+  const data = messages[messages.length - 2];
+  console.log("Data", data);
+  const match = data.text.match(/\$([a-zA-Z0-9]+)/);
+  match
+    ? console.log("Token query sent", match)
+    : console.log("normal chat", match);
+
+  let tokenQuery = false;
+
+  if (match) {
+    tokenQuery = true;
+  } else if (!match) {
+    tokenQuery = false;
+  }
+
   const chatBodyRef = useRef(null);
 
   // UserObject data for this user from firestore
@@ -24,8 +40,6 @@ export default function ChatBody({
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
   }, [messages]);
-
-  const tokenQuery = true;
 
   return (
     <div className="flex flex-col flex-auto h-full p-6 ">
