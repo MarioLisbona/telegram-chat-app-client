@@ -1,3 +1,5 @@
+import ChartData from "./ChartData";
+
 export default function DataGrid({ files }) {
   return (
     <ul
@@ -5,14 +7,10 @@ export default function DataGrid({ files }) {
       className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-5 xl:gap-x-8"
     >
       {files
-        ? files.map((file) => (
-            <li key={file.source} className="relative">
-              <div className="group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                <img
-                  src={file.source}
-                  alt=""
-                  className="pointer-events-none object-cover group-hover:opacity-75"
-                />
+        ? files.map((file, index) => (
+            <li key={index} className="relative">
+              <div className="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 border border-transparent hover:border-violet-600 hover:bg-gray-200 transition duration-300 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                <ChartData />
                 <button
                   type="button"
                   className="absolute inset-0 focus:outline-none"
