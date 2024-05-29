@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 
 import TypingBubble from "./components/TypingBubble";
 import UserJoinLeave from "./components/UserJoinLeave";
+import DataGrid from "./components/DataGrid";
 
 export default function ChatBody({
   messages,
@@ -23,6 +24,42 @@ export default function ChatBody({
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
   }, [messages]);
+
+  const files = [
+    {
+      title: "IMG_4985.HEIC",
+      size: "3.9 MB",
+      source:
+        "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
+    },
+    {
+      title: "IMG_4985.HEIC",
+      size: "3.9 MB",
+      source:
+        "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
+    },
+    {
+      title: "IMG_4985.HEIC",
+      size: "3.9 MB",
+      source:
+        "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
+    },
+    {
+      title: "IMG_4985.HEIC",
+      size: "3.9 MB",
+      source:
+        "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
+    },
+    {
+      title: "IMG_4985.HEIC",
+      size: "3.9 MB",
+      source:
+        "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
+    },
+    // More files...
+  ];
+
+  const nofiles = [];
 
   return (
     <div className="flex flex-col flex-auto h-full p-6 ">
@@ -51,6 +88,7 @@ export default function ChatBody({
                 </div>
               )}
             </div>
+            <DataGrid files={files} />
           </div>
         </div>
         <ChatFooter socket={socket} />
