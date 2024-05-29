@@ -59,6 +59,7 @@ export default function ChatBody({
     // More files...
   ];
 
+  // eslint-disable-next-line no-unused-vars
   const nofiles = [];
 
   return (
