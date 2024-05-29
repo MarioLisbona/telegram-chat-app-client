@@ -1,7 +1,7 @@
 import ChatFooter from "../footer/ChatFooter";
 import ChatMessageReceived from "./components/ChatMessageReceived";
 import ChatMessageSent from "./components/ChatMessageSent";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import TypingBubble from "./components/TypingBubble";
 import UserJoinLeave from "./components/UserJoinLeave";
@@ -13,21 +13,23 @@ export default function ChatBody({
   onlineUsers,
   userTyping,
 }) {
-  console.log("Last msg sent in ChatBody", messages[messages.length - 2]);
-  const data = messages[messages.length - 2];
-  console.log("Data", data);
-  const match = data.text.match(/\$([a-zA-Z0-9]+)/);
-  match
-    ? console.log("Token query sent", match)
-    : console.log("normal chat", match);
+  const [tokenQuery, setTokenQuery] = useState(false);
+  const [lastMessage, setLastMessage] = useState({});
+  // console.log("Last msg sent in ChatBody", messages[messages.length - 2]);
+  // const data = messages[messages.length - 2];
+  // console.log("Data", data);
+  // const match = data.text.match(/\$([a-zA-Z0-9]+)/);
+  // match
+  //   ? console.log("Token query sent", match)
+  //   : console.log("normal chat", match);
 
-  let tokenQuery = false;
+  // let tokenQuery = false;
 
-  if (match) {
-    tokenQuery = true;
-  } else if (!match) {
-    tokenQuery = false;
-  }
+  // if (match) {
+  //   tokenQuery = true;
+  // } else if (!match) {
+  //   tokenQuery = false;
+  // }
 
   const chatBodyRef = useRef(null);
 
@@ -40,6 +42,22 @@ export default function ChatBody({
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
   }, [messages]);
+
+  useEffect(() => {
+    console.log("Last msg sent in ChatBody", messages[messages.length - 1]);
+    setLastMessage(messages[messages.length - 1]);
+
+    if (lastMessage && lastMessage.text) {
+      const match = lastMessage.text.match(/\$([a-zA-Z0-9]+)/);
+      if (match) {
+        setTokenQuery(true);
+      } else {
+        setTokenQuery(false);
+      }
+    }
+  }, [lastMessage, messages]);
+
+  console.log("tokenQuery", tokenQuery);
 
   return (
     <div className="flex flex-col flex-auto h-full p-6 ">
