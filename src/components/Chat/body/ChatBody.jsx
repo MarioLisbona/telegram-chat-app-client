@@ -41,7 +41,7 @@ export default function ChatBody({
     if (chatBodyRef.current) {
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, tokenQuery]);
 
   useEffect(() => {
     console.log("Last msg sent in ChatBody", messages[messages.length - 1]);
