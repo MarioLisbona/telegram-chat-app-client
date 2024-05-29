@@ -1,14 +1,5 @@
-import { PureComponent } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import React, { PureComponent } from "react";
+import { BarChart, Bar, ResponsiveContainer } from "recharts";
 
 const data = [
   {
@@ -55,31 +46,12 @@ const data = [
   },
 ];
 
-export default class ChartData extends PureComponent {
-  static demoUrl = "https://codesandbox.io/p/sandbox/mixed-bar-chart-lv3l68";
-
+export default class Example extends PureComponent {
   render() {
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-          <Bar dataKey="amt" stackId="a" fill="#82ca9d" />
-          <Bar dataKey="uv" fill="#ffc658" />
+        <BarChart width={150} height={40} data={data}>
+          <Bar dataKey="uv" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
     );
