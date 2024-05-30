@@ -119,3 +119,22 @@ export const handleTokenClick = (coin, onlineUsers, formatDateTime, socket) => {
   };
   socket.emit("tokenClick", data);
 };
+
+export const fetchTokenData = async (match) => {
+  console.log("MAtch inside function", match);
+  const token = match[1];
+  console.log("token inside function", token);
+  const url = import.meta.env.VITE_SERVER_URL || "http://localhost:4000";
+  console.log("Fetch url", `${url}/api/token-data?token=${token}`);
+
+  try {
+    const response = await fetch(`${url}/api/token-data?token=${token}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch token data");
+    }
+    const data = await response.json();
+    console.log("Returned Data", data);
+  } catch (error) {
+    console.error("Error fetching token data:", error);
+  }
+};
