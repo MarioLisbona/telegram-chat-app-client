@@ -14,23 +14,6 @@ export default function ChatBody({
   userTyping,
 }) {
   const [tokenQuery, setTokenQuery] = useState(false);
-  const [lastMessage, setLastMessage] = useState({});
-  // console.log("Last msg sent in ChatBody", messages[messages.length - 2]);
-  // const data = messages[messages.length - 2];
-  // console.log("Data", data);
-  // const match = data.text.match(/\$([a-zA-Z0-9]+)/);
-  // match
-  //   ? console.log("Token query sent", match)
-  //   : console.log("normal chat", match);
-
-  // let tokenQuery = false;
-
-  // if (match) {
-  //   tokenQuery = true;
-  // } else if (!match) {
-  //   tokenQuery = false;
-  // }
-
   const chatBodyRef = useRef(null);
 
   // UserObject data for this user from firestore
@@ -44,18 +27,22 @@ export default function ChatBody({
   }, [messages, tokenQuery]);
 
   useEffect(() => {
-    console.log("Last msg sent in ChatBody", messages[messages.length - 1]);
-    setLastMessage(messages[messages.length - 1]);
+    const lastMessage = messages[messages.length - 1];
+    console.log("Last msg sent in ChatBody", lastMessage);
 
     if (lastMessage && lastMessage.text) {
       const match = lastMessage.text.match(/\$([a-zA-Z0-9]+)/);
+      console.log("Match", match);
       if (match) {
         setTokenQuery(true);
-      } else {
-        setTokenQuery(false);
       }
     }
-  }, [lastMessage, messages]);
+
+    console.log(
+      "Last msg sent in ChatBody-----end of useEffect()",
+      lastMessage
+    );
+  }, [messages]);
 
   console.log("tokenQuery", tokenQuery);
 
@@ -86,7 +73,31 @@ export default function ChatBody({
                 </div>
               )}
             </div>
-            {tokenQuery && <DataGrid />}
+            {tokenQuery && (
+              <div>
+                <button
+                  type="button"
+                  className=" bg-white border border-gray-300 rounded-full p-2 my-2 hover:bg-gray-200 focus:outline-none"
+                  onClick={() => setTokenQuery(false)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 text-gray-600 hover:text-gray-800"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+                <DataGrid />
+              </div>
+            )}
           </div>
         </div>
         <ChatFooter socket={socket} />
