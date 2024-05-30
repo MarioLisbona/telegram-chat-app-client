@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import TypingBubble from "./components/TypingBubble";
 import UserJoinLeave from "./components/UserJoinLeave";
 import DataGrid from "./components/DataGrid";
+import { fetchTokenData } from "../../../lib/chatUtils";
 
 export default function ChatBody({
   messages,
@@ -28,20 +29,14 @@ export default function ChatBody({
 
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
-    console.log("Last msg sent in ChatBody", lastMessage);
 
     if (lastMessage && lastMessage.text) {
       const match = lastMessage.text.match(/\$([a-zA-Z0-9]+)/);
-      console.log("Match", match);
       if (match) {
+        fetchTokenData(match);
         setTokenQuery(true);
       }
     }
-
-    console.log(
-      "Last msg sent in ChatBody-----end of useEffect()",
-      lastMessage
-    );
   }, [messages]);
 
   console.log("tokenQuery", tokenQuery);
