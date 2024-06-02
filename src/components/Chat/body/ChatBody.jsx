@@ -15,6 +15,7 @@ export default function ChatBody({
   userTyping,
 }) {
   const [tokenQuery, setTokenQuery] = useState(false);
+  const [token, setToken] = useState("");
   const chatBodyRef = useRef(null);
 
   // UserObject data for this user from firestore
@@ -33,7 +34,7 @@ export default function ChatBody({
     if (lastMessage && lastMessage.text) {
       const match = lastMessage.text.match(/\$([a-zA-Z0-9]+)/);
       if (match) {
-        fetchTokenData(match);
+        fetchTokenData(match, setToken);
         setTokenQuery(true);
       }
     }
@@ -90,7 +91,7 @@ export default function ChatBody({
                     />
                   </svg>
                 </button>
-                <DataGrid />
+                <DataGrid token={token} />
               </div>
             )}
           </div>
