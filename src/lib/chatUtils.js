@@ -120,7 +120,7 @@ export const handleTokenClick = (coin, onlineUsers, formatDateTime, socket) => {
   socket.emit("tokenClick", data);
 };
 
-export const fetchTokenData = async (match) => {
+export const fetchTokenData = async (match, setToken) => {
   console.log("MAtch inside function", match);
   const token = match[1];
   console.log("token inside function", token);
@@ -132,8 +132,9 @@ export const fetchTokenData = async (match) => {
     if (!response.ok) {
       throw new Error("Failed to fetch token data");
     }
-    const data = await response.json();
-    console.log("Returned Data", data);
+    const tokenObject = await response.json();
+
+    setToken(tokenObject);
   } catch (error) {
     console.error("Error fetching token data:", error);
   }
