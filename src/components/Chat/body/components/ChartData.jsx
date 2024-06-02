@@ -1,5 +1,15 @@
-import { PureComponent } from "react";
-import { BarChart, Bar, ResponsiveContainer } from "recharts";
+import React, { PureComponent } from "react";
+import {
+  BarChart,
+  Bar,
+  Rectangle,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const data = [
   {
@@ -47,11 +57,35 @@ const data = [
 ];
 
 export default class Example extends PureComponent {
+  static demoUrl = "https://codesandbox.io/p/sandbox/simple-bar-chart-72d7y5";
+
   render() {
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart width={150} height={40} data={data}>
-          <Bar dataKey="uv" fill="#8884d8" />
+        <BarChart
+          width={0}
+          height={300}
+          data={data}
+          margin={{
+            top: 5,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis />
+          <YAxis tickFormatter={(value) => `${value / 1000}k`} />
+          <Tooltip />
+          <Legend />
+          <Bar
+            dataKey="pv"
+            fill="#8884d8"
+            activeBar={<Rectangle fill="pink" stroke="blue" />}
+          />
+          <Bar
+            dataKey="uv"
+            fill="#82ca9d"
+            activeBar={<Rectangle fill="gold" stroke="purple" />}
+          />
         </BarChart>
       </ResponsiveContainer>
     );
